@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="966b0988-42bc-4d09-b5a4-255098fe17f7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/LAB1.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu/asgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu/wsgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/static/css/examp.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/static/photo/city/Волгоград.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/static/photo/city/Екатеринбург.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/static/photo/city/Киров.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/static/photo/city/Москва.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/static/photo/city/Санкт-Петербург.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/static/photo/vakansia.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bmstu_lab/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/filters.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/order.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/order_element.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/orders.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2VeffUQU4r6FidLbIpbuZTSGUfj" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/bmstu"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\bmstu" />
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\bmstu\templates" />
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\bmstu\bmstu_lab" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="bmstu" type="Python.DjangoServer" factoryName="Django server">
+      <module name="LAB1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="bmstu.settings" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="966b0988-42bc-4d09-b5a4-255098fe17f7" name="Changes" comment="" />
+      <created>1695201569744</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695201569744</updated>
+      <workItem from="1695201588852" duration="277000" />
+      <workItem from="1695201879615" duration="270000" />
+      <workItem from="1695202208338" duration="81000" />
+      <workItem from="1695202303467" duration="17000" />
+      <workItem from="1695209164014" duration="79000" />
+      <workItem from="1695209371722" duration="860000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
