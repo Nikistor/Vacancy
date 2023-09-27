@@ -14,7 +14,7 @@
     <div class="background-image">
             <img src="{% static 'photo/vakansia.jpg' %}" alt="Фоновое изображение">
         </div>
-            <h1> Выберите города в котором, нужно разместить вакансию </h1>
+            <h1> Города, в котором открыта вакансия </h1>
         {# Наследование шаблонизации#}
         {% block content %}{% endblock %}
 {#        <form action="sendText" method="post" enctype="multipart/form-data">#}
@@ -24,6 +24,7 @@
 {#            <input type="submit" value="Submit">#}
 {#        </form>#}
         <form method="GET" action="{% url 'filter' %}">
+            <p></p>
             <input type="text" name="filter_keyword" placeholder="Введите город">
 {#                <select name="filter_field">#}
 {#                    <option value="name">Город</option>#}
