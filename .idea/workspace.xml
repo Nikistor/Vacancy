@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="86500b19-874e-4ca4-a035-ce21004aede5" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2Wz7i3vKqzKRWJ060TtK2UOysTb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab_3_REST_API&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_3_REST_API\bmstu_lab" />
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_3_REST_API\templates" />
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_3_REST_API" />
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_3_REST_API\bmstu" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="lab_3_REST_API" type="Python.DjangoServer" factoryName="Django server">
+      <module name="lab_3_REST_API" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="86500b19-874e-4ca4-a035-ce21004aede5" name="Changes" comment="" />
+      <created>1697723678631</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1697723678631</updated>
+      <workItem from="1697723681315" duration="3793000" />
+      <workItem from="1697902610643" duration="4199000" />
+      <workItem from="1697918987298" duration="495000" />
+      <workItem from="1697920018912" duration="176000" />
+      <workItem from="1697920417099" duration="709000" />
+      <workItem from="1697956975802" duration="161000" />
+      <workItem from="1697959237636" duration="2582000" />
+      <workItem from="1697962914495" duration="1703000" />
+      <workItem from="1697965166977" duration="12643000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
