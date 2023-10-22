@@ -25,7 +25,7 @@ class CityList(APIView):
         """
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            city = serializer.save()  # Сохраняем город
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -60,7 +60,6 @@ class CityDetail(APIView):
         city.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
 @api_view(['Put'])
 def put_city_detail(request, pk, format=None):
     """
@@ -72,6 +71,27 @@ def put_city_detail(request, pk, format=None):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Добавляет новую запись в заявку
+@api_view(['Post'])
+def post_city_in_vacancy(request, city_pk, vacancy_pk, format=None):
+    try:
+        city = City.objects.get(pk=city_pk)
+    except City.DoesNotExist:
+        return Response(f"ERROR! Object City does not exist with ID {city_pk}",
+                        status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        vacancy = Vacancy.objects.get(pk=vacancy_pk)
+    except Vacancy.DoesNotExist:
+        return Response(f"ERROR! Object Vacancy does not exist with ID {vacancy_pk}",
+                        status=status.HTTP_404_NOT_FOUND)
+
+    VacancyCity.objects.create(
+        id_city=city,
+        id_vacancy=vacancy,
+    )
+    return Response('Successfully created', status=status.HTTP_201_CREATED)
 
 # Вакансия
 class VacancyList(APIView):
@@ -126,7 +146,6 @@ class VacancyDetail(APIView):
         vacancy = get_object_or_404(self.model_class, pk=pk)
         vacancy.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 @api_view(['Put'])
 def put_vacancy_detail(request, pk, format=None):

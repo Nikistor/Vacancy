@@ -135,11 +135,11 @@ USE_TZ = True
 # Работает
 STATIC_URL = "/static/"
 
-# Это позволяет Django искать статические файлы в папке "static" в корневом каталоге проекта.
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-] # (при этом можно папку с static поместить в ту же директорию, где лежит папка tеmplates и, соответственно, путь прописать аналогичным образом)
+# # Это позволяет Django искать статические файлы в папке "static" в корневом каталоге проекта.
+# # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ] # (при этом можно папку с static поместить в ту же директорию, где лежит папка tеmplates и, соответственно, путь прописать аналогичным образом)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
