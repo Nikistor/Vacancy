@@ -11,13 +11,18 @@ class CityList(APIView):
     model_class = City
     serializer_class = CitySerializer
 
-    def get(self, request, format=None):
+    def get(self, request, pk=None, format=None):
         """
-        Возвращает список городов
+        Возвращает список городов или информацию о конкретном городе
         """
-        city = self.model_class.objects.all()
-        serializer = self.serializer_class(city, many=True)
-        return Response(serializer.data)
+        if pk:
+            city = get_object_or_404(self.model_class, pk=pk)
+            serializer = self.serializer_class(city)
+            return Response(serializer.data)
+        else:
+            cities = self.model_class.objects.all()
+            serializer = self.serializer_class(cities, many=True)
+            return Response(serializer.data)
 
     def post(self, request, format=None):
         """
@@ -25,25 +30,13 @@ class CityList(APIView):
         """
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            city = serializer.save()  # Сохраняем город
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CityDetail(APIView):
-    model_class = City
-    serializer_class = CitySerializer
-
-    def get(self, request, pk, format=None):
-        """
-        Возвращает информацию о городе
-        """
-        city = get_object_or_404(self.model_class, pk=pk)
-        serializer = self.serializer_class(city)
-        return Response(serializer.data)
-
     def put(self, request, pk, format=None):
         """
-        Обновляет информацию о городе (для модератора)
+        Обновляет информацию о городе
         """
         city = get_object_or_404(self.model_class, pk=pk)
         serializer = self.serializer_class(city, data=request.data, partial=True)
@@ -98,13 +91,18 @@ class VacancyList(APIView):
     model_class = Vacancy
     serializer_class = VacancySerializer
 
-    def get(self, request, format=None):
+    def get(self, request, pk=None, format=None):
         """
-        Возвращает список вакансии
+        Возвращает список вакансий или информацию о конкретной вакансии
         """
-        vacancy = self.model_class.objects.all()
-        serializer = self.serializer_class(vacancy, many=True)
-        return Response(serializer.data)
+        if pk:
+            vacancy = get_object_or_404(self.model_class, pk=pk)
+            serializer = self.serializer_class(vacancy)
+            return Response(serializer.data)
+        else:
+            vacancies = self.model_class.objects.all()
+            serializer = self.serializer_class(vacancies, many=True)
+            return Response(serializer.data)
 
     def post(self, request, format=None):
         """
@@ -116,21 +114,9 @@ class VacancyList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class VacancyDetail(APIView):
-    model_class = Vacancy
-    serializer_class = VacancySerializer
-
-    def get(self, request, pk, format=None):
-        """
-        Возвращает информацию о вакансии
-        """
-        vacancy = get_object_or_404(self.model_class, pk=pk)
-        serializer = self.serializer_class(vacancy)
-        return Response(serializer.data)
-
     def put(self, request, pk, format=None):
         """
-        Обновляет информацию о вакансии (для модератора)
+        Обновляет информацию о вакансии
         """
         vacancy = get_object_or_404(self.model_class, pk=pk)
         serializer = self.serializer_class(vacancy, data=request.data, partial=True)

@@ -14,22 +14,32 @@
       </list>
     </option>
   </component>
+  <component name="InvalidFacetManager">
+    <ignored-facets>
+      <facet id="lab_3_REST_API/invalid/Django" />
+    </ignored-facets>
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2Wz7i3vKqzKRWJ060TtK2UOysTb" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab_3_REST_API&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab_2_database",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_3_REST_API\bmstu_lab" />
@@ -85,13 +95,19 @@
       <workItem from="1698010387138" duration="95000" />
       <workItem from="1698010508712" duration="7000" />
       <workItem from="1698010738950" duration="408000" />
+      <workItem from="1698011342424" duration="17000" />
+      <workItem from="1698012839187" duration="4000" />
+      <workItem from="1698013659608" duration="198000" />
+      <workItem from="1698041728005" duration="915000" />
+      <workItem from="1698042673693" duration="208000" />
+      <workItem from="1698042906911" duration="6000" />
+      <workItem from="1698044491824" duration="85000" />
+      <workItem from="1698045384773" duration="1523000" />
+      <workItem from="1698058763894" duration="4269000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/lab_3_REST_API$DB_Minio.coverage" NAME="DB_Minio Coverage Results" MODIFIED="1697993290420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/bmstu_lab" />
   </component>
 </project>
