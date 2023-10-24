@@ -5,6 +5,12 @@ from bmstu_lab.serializers import CitySerializer, VacancySerializer, VacancyCity
 from bmstu_lab.models import City, Vacancy, VacancyCity, Users
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+from bmstu_lab.DB_Minio import DB_Minio
+from datetime import datetime
+import io
+import requests
+from rest_framework import generics
+from django.utils import timezone
 
 # Город
 class CityList(APIView):
@@ -36,7 +42,7 @@ class CityList(APIView):
 
     def put(self, request, pk, format=None):
         """
-        Обновляет информацию о городе
+        Обновляет информацию о городе (для модератора)
         """
         city = get_object_or_404(self.model_class, pk=pk)
         serializer = self.serializer_class(city, data=request.data, partial=True)
@@ -53,21 +59,9 @@ class CityList(APIView):
         city.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['Put'])
-def put_city_detail(request, pk, format=None):
-    """
-    Обновляет информацию о городе (для пользователя)
-    """
-    city = get_object_or_404(City, pk=pk)
-    serializer = CitySerializer(city, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 # Добавляет новую запись в заявку
-@api_view(['Post'])
-def post_city_in_vacancy(request, city_pk, vacancy_pk, format=None):
+@api_view(['POST'])
+def POST_city_in_vacancy(request, city_pk, vacancy_pk, format=None):
     try:
         city = City.objects.get(pk=city_pk)
     except City.DoesNotExist:
@@ -133,8 +127,8 @@ class VacancyList(APIView):
         vacancy.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['Put'])
-def put_vacancy_detail(request, pk, format=None):
+@api_view(['PUT'])
+def PUT_vacancy(request, pk, format=None):
     """
     Обновляет информацию о вакансии (для пользователя)
     """
@@ -145,8 +139,8 @@ def put_vacancy_detail(request, pk, format=None):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['Put'])
-def put_vacancy_BY_EMPLOYER(request, pk, format=None):
+@api_view(['PUT'])
+def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
     """
     Обновляет информацию о вакансии (для пользователя)
     """
@@ -157,8 +151,8 @@ def put_vacancy_BY_EMPLOYER(request, pk, format=None):
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['Put'])
-def put_vacancy_BY_MODERATOR(request, pk, format=None):
+@api_view(['PUT'])
+def PUT_vacancy_BY_MODERATOR(request, pk, format=None):
     """
     Обновляет информацию о вакансии (для пользователя)
     """
@@ -174,17 +168,18 @@ class VacancyCityList(APIView):
     model_class = VacancyCity
     serializer_class = VacancyCitySerializer
 
-    def get(self, request, format=None):
-        """
-        Возвращает список вакансии города
-        """
-        vacancycity = self.model_class.objects.all()
-        serializer = self.serializer_class(vacancycity, many=True)
-        return Response(serializer.data)
-
-class VacancyCityDetail(APIView):
-    model_class = VacancyCity
-    serializer_class = VacancyCitySerializer
+    # def get(self, request, pk=None, format=None):
+    #     """
+    #     Возвращает список вакансий города или информацию о конкретной вакансии города
+    #     """
+    #     if pk:
+    #         vacancycity = get_object_or_404(self.model_class, pk=pk)
+    #         serializer = self.serializer_class(vacancycity)
+    #         return Response(serializer.data)
+    #     else:
+    #         vacancycity = self.model_class.objects.all()
+    #         serializer = self.serializer_class(vacancycity, many=True)
+    #         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
         """
@@ -204,4 +199,7 @@ class VacancyCityDetail(APIView):
         vacancycity = get_object_or_404(self.model_class, pk=pk)
         vacancycity.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
 

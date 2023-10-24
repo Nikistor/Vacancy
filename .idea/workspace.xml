@@ -36,7 +36,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab_2_database",
+    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/Backend-REST_API",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -104,6 +104,7 @@
       <workItem from="1698044491824" duration="85000" />
       <workItem from="1698045384773" duration="1523000" />
       <workItem from="1698058763894" duration="4269000" />
+      <workItem from="1698148346330" duration="10108000" />
     </task>
     <servers />
   </component>
