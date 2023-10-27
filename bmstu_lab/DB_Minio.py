@@ -106,7 +106,7 @@ class DB_Minio():
         except Exception as ex:
             print(f'[ERROR] Не удалось взять объект из хранилища в файл. \n{ex}')
 
-    # Выводит информацию о объектах
+    # Выводит информацию об объектах
     def stat_object(self, bucket_name: str, object_name: str):
         try:
             result = self.client.stat_object(
@@ -152,7 +152,7 @@ class DB_Minio():
         except Exception as ex:
             print(f'[ERROR] Не удалось получить данные о объектах. \n{ex}')
 
-    # Вставляет картинки в бакет с ссылки внешних источников
+    # Вставляет картинки в бакет со ссылки внешних источников
     # https://min.io/docs/minio/linux/developers/python/API.html#put_object
     def put_object_url(self, bucket_name: str, object_name: str, url):
         try:
