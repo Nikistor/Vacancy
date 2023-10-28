@@ -20,10 +20,41 @@ class CityList(APIView):
 
     def get(self, request, format=None):
         """
-        Возвращает список городов или информацию о конкретном городе
+        Возвращает список городов
         """
-        cities = self.model_class.objects.all()
-        serializer = self.serializer_class(cities, many=True)
+
+        # Получим параметры запроса из URL
+        name = request.GET.get('name')
+        foundation_date = request.GET.get('foundation_date')
+        grp = request.GET.get('grp')
+        climate = request.GET.get('climate')
+        square = request.GET.get('square')
+        status = request.GET.get('status')
+        description = request.GET.get('description')
+
+        # Получение данные после запроса с БД (через ORM)
+        city = self.model_class.objects.all()
+
+        if name and foundation_date and grp and climate and square and status and description is None:
+            pass
+        else:
+            # Применим фильтры на основе параметров запроса, если они предоставлены
+            if name:
+                city = city.filter(name__icontains=name)
+            if foundation_date:
+                city = city.filter(foundation_date=foundation_date)
+            if grp:
+                city = city.filter(grp=grp)
+            if climate:
+                city = city.filter(climate__icontains=climate)
+            if square:
+                city = city.filter(square=square)
+            if status:
+                city = city.filter(status=status)
+            if description:
+                city = city.filter(description__icontains=description)
+
+        serializer = self.serializer_class(city, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
@@ -129,9 +160,56 @@ class VacancyList(APIView):
         """
         Возвращает список вакансий или информацию о конкретной вакансии
         """
-        vacancies = self.model_class.objects.all()
-        serializer = self.serializer_class(vacancies, many=True)
-        return Response(serializer.data)
+        # vacancies = self.model_class.objects.all()
+        # serializer = self.serializer_class(vacancies, many=True)
+        # return Response(serializer.data)
+
+        vacancy = Vacancy.objects.all()
+
+        # Получим параметры запроса из URL
+        name_vacancy = request.GET.get('name_vacancy')
+        status_vacancy = request.GET.get('status_vacancy')
+        date_create = request.GET.get('date_create')
+        date_close = request.GET.get('date_close')
+        # Дата после
+        date_form_after = request.GET.get('date_form_after')
+        # Дата ДО
+        date_form_before = request.GET.get('date_form_before')
+
+        # Проверяет, пустой запрос на фильтр
+        if all(item is None for item in
+               [name_vacancy, status_vacancy, date_create, date_close, date_form_after, date_form_before]):
+            # Сериализиуем его, чтобы получить в формате JSON
+            vacancy_serializer = self.serializer_class(vacancy, many=True)
+        else:
+            # Применим фильтры на основе параметров запроса, если они предоставлены
+            if name_vacancy:
+                vacancy = vacancy.filter(name_vacancy=name_vacancy)
+            if status_vacancy:
+                vacancy = vacancy.filter(status_vacancy=status_vacancy)
+            if date_create:
+                vacancy = vacancy.filter(date_create=date_create)
+            if date_close:
+                vacancy = vacancy.filter(date_close=date_close)
+
+            # Дата формирования ПОСЛЕ
+            if date_form_after and date_form_before is None:
+                vacancy = vacancy.filter(date_form__gte=date_form_after)
+            # Дата формирования ДО
+            if date_form_after is None and date_form_before:
+                vacancy = vacancy.filter(date_form__lte=date_form_before)
+
+            # Дата формирования ПОСЛЕ и ДО
+            if date_form_after and date_form_before:
+                if date_form_after > date_form_before:
+                    return Response('Mistake! It is impossible to sort when "BEFORE" exceeds "AFTER"!')
+                vacancy = vacancy.filter(date_form__gte=date_form_after)
+                vacancy = vacancy.filter(date_form__lte=date_form_before)
+
+            # Сериализуем результаты запроса
+            vacancy_serializer = VacancySerializer(vacancy, many=True)
+
+        return Response(vacancy_serializer.data)
 
     def post(self, request, format=None):
         """
@@ -218,29 +296,67 @@ def PUT_vacancy(request, pk, format=None):
         return Response(vacancy_serializer.data)
     return Response(vacancy_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# @api_view(['PUT'])
+# def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
+#
+#  vacancy = get_object_or_404(Vacancy, pk=pk)
+#             serializer = VacancySerializer(vacancy, data=request.data, partial=True)
+#             if serializer.is_valid():
+#                 serializer.save()
+#                 return Response(serializer.data)
+#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['PUT'])
 def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
     """
     Обновляет информацию о вакансии (для пользователя)
     """
-    vacancy = get_object_or_404(Vacancy, pk=pk)
-    serializer = VacancySerializer(vacancy, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    if request.data['status_vacancy'] in ['На модерации', 'Закрыта']:
+        try:
+            vacancy = Vacancy.objects.get(pk=pk)
+        except Vacancy.DoesNotExist:
+            return Response("Vacancy not found", status=status.HTTP_404_NOT_FOUND)
+
+        vacancy.status_vacancy = request.data['status_vacancy']
+
+        if 'id_employer' in request.data:
+            new_id_employer = request.data['id_employer']
+            try:
+                new_employer = Users.objects.get(pk=new_id_employer)
+                vacancy.id_employer = new_employer
+                vacancy.save()
+                return Response("Successfully updated status")
+            except Users.DoesNotExist:
+                return Response("New employer not found", status=status.HTTP_404_NOT_FOUND)
+        # return Response(mars_station_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response('You are not moderator! Check status in [На модерации, Закрыта]')
 
 @api_view(['PUT'])
 def PUT_vacancy_BY_MODERATOR(request, pk, format=None):
     """
     Обновляет информацию о вакансии (для пользователя)
     """
-    vacancy = get_object_or_404(Vacancy, pk=pk)
-    serializer = VacancySerializer(vacancy, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    if request.data['status_vacancy'] in ['На модерации', 'Закрыта', 'Опубликована', 'Отклонена']:
+        try:
+            vacancy = Vacancy.objects.get(pk=pk)
+        except Vacancy.DoesNotExist:
+            return Response("Vacancy not found", status=status.HTTP_404_NOT_FOUND)
+
+        vacancy.status_vacancy = request.data['status_vacancy']
+
+        if 'id_moderator' in request.data:
+            new_id_moderator = request.data['id_moderator']
+            try:
+                new_moderator = Users.objects.get(pk=new_id_moderator)
+                vacancy.id_moderator = new_moderator
+                vacancy.save()
+                return Response("Successfully updated status")
+            except Users.DoesNotExist:
+                return Response("New moderator not found", status=status.HTTP_404_NOT_FOUND)
+        # return Response(mars_station_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response('You are not moderator! Check status in [На модерации, Закрыта, Опубликована, Отклонена]')
 
 # Вакансии города
 class VacancyCityList(APIView):
