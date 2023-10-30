@@ -96,7 +96,7 @@ def GET_city(request, pk=None, format=None):
     """
     if request.method == 'GET':
         city = get_object_or_404(City, pk=pk)
-        
+
     serializer = CitySerializer(city)
     return Response(serializer.data)
 
