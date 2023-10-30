@@ -69,7 +69,7 @@ class CityList(APIView):
 
     def put(self, request, pk, format=None):
         """
-        Обновляет информацию о городе (для модератора)
+        Обновляет информацию о городе
         """
         city = get_object_or_404(self.model_class, pk=pk)
         serializer = self.serializer_class(city, data=request.data, partial=True)
@@ -149,7 +149,7 @@ def POST_city_in_vacancy(request, city_pk, format=None):
         id_city=city,
         id_vacancy=vacancy,
     )
-    return Response(f'Successfully created, ID: {vacancy.id}', status=status.HTTP_201_CREATED)
+    return Response(f'Successfully created, vacancy ID: {vacancy.id}', status=status.HTTP_201_CREATED)
 
 # Вакансия
 class VacancyList(APIView):
@@ -158,12 +158,8 @@ class VacancyList(APIView):
 
     def get(self, request, format=None):
         """
-        Возвращает список вакансий или информацию о конкретной вакансии
+        Возвращает список вакансий
         """
-        # vacancies = self.model_class.objects.all()
-        # serializer = self.serializer_class(vacancies, many=True)
-        # return Response(serializer.data)
-
         vacancy = Vacancy.objects.all()
 
         # Получим параметры запроса из URL
@@ -287,7 +283,7 @@ def GET_vacancy(request, pk=None, format=None):
 @api_view(['PUT'])
 def PUT_vacancy(request, pk, format=None):
     """
-    Обновляет информацию о вакансии (для пользователя)
+    Обновляет информацию о вакансии
     """
     vacancy = get_object_or_404(Vacancy, pk=pk)
     vacancy_serializer = VacancySerializer(vacancy, data=request.data, partial=True)
@@ -296,22 +292,12 @@ def PUT_vacancy(request, pk, format=None):
         return Response(vacancy_serializer.data)
     return Response(vacancy_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# @api_view(['PUT'])
-# def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
-#
-#  vacancy = get_object_or_404(Vacancy, pk=pk)
-#             serializer = VacancySerializer(vacancy, data=request.data, partial=True)
-#             if serializer.is_valid():
-#                 serializer.save()
-#                 return Response(serializer.data)
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 @api_view(['PUT'])
 def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
     """
-    Обновляет информацию о вакансии (для пользователя)
+    Обновляет информацию о вакансии
     """
-    if request.data['status_vacancy'] in ['На модерации', 'Закрыта']:
+    if request.data['status_vacancy'] in ['Создана', 'Закрыта']:
         try:
             vacancy = Vacancy.objects.get(pk=pk)
         except Vacancy.DoesNotExist:
@@ -328,14 +314,13 @@ def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
                 return Response("Successfully updated status")
             except Users.DoesNotExist:
                 return Response("New employer not found", status=status.HTTP_404_NOT_FOUND)
-        # return Response(mars_station_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
-        return Response('You are not moderator! Check status in [На модерации, Закрыта]')
+        return Response('You are not moderator! Check status in [Создана, Закрыта]')
 
 @api_view(['PUT'])
 def PUT_vacancy_BY_MODERATOR(request, pk, format=None):
     """
-    Обновляет информацию о вакансии (для пользователя)
+    Обновляет информацию о вакансии
     """
     if request.data['status_vacancy'] in ['На модерации', 'Закрыта', 'Опубликована', 'Отклонена']:
         try:
@@ -363,22 +348,9 @@ class VacancyCityList(APIView):
     model_class = VacancyCity
     serializer_class = VacancyCitySerializer
 
-    # def get(self, request, pk=None, format=None):
-    #     """
-    #     Возвращает список вакансий города или информацию о конкретной вакансии города
-    #     """
-    #     if pk:
-    #         vacancycity = get_object_or_404(self.model_class, pk=pk)
-    #         serializer = self.serializer_class(vacancycity)
-    #         return Response(serializer.data)
-    #     else:
-    #         vacancycity = self.model_class.objects.all()
-    #         serializer = self.serializer_class(vacancycity, many=True)
-    #         return Response(serializer.data)
-
     def put(self, request, pk, format=None):
         """
-        Обновляет информацию о вакансии города (для модератора)
+        Обновляет информацию о вакансии города
         """
         vacancycity = get_object_or_404(self.model_class, pk=pk)
         serializer = self.serializer_class(vacancycity, data=request.data, partial=True)

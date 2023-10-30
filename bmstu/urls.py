@@ -35,21 +35,19 @@ urlpatterns = [
     path(r'city/<int:pk>/', views.GET_city, name='city-id'),
     path(r'city/<int:pk>/update/', views.CityList.as_view(), name='city-list'),
     path(r'city/<int:pk>/delete/', views.CityList.as_view(), name='city-list'),
-    path(r'city/<int:city_pk>/create_vacancy/', views.POST_city_in_vacancy, name='create-vacancy-post'),
+    path(r'city/<int:city_pk>/create_vacancy/', views.POST_city_in_vacancy, name='create-vacancy'),
 
     # ЗАЯВКА (Вакансия)
     # Заявки - список, одна запись, изменение, статусы создателя, статусы модератора, удаление
     path(r'vacancy/', views.VacancyList.as_view(), name='vacancy-list'),
-    path(r'vacancy/<int:pk>/', views.GET_vacancy, name='vacancy-list-id'),
+    path(r'vacancy/<int:pk>/', views.GET_vacancy, name='vacancy-id'),
     path(r'vacancy/<int:pk>/update/', views.VacancyList.as_view(), name='vacancy-list'),
     path(r'vacancy/<int:pk>/delete/', views.VacancyList.as_view(), name='vacancy-list'),
-    path(r'vacancy/<int:pk>/update_by_employer/', views.PUT_vacancy_BY_EMPLOYER, name='vacancy-put-by-employer'),
-    path(r'vacancy/<int:pk>/update_by_moderator/', views.PUT_vacancy_BY_MODERATOR, name='vacancy-put-by-moderator'),
+    path(r'vacancy/<int:pk>/update_by_employer/', views.PUT_vacancy_BY_EMPLOYER, name='vacancy-by-employer'),
+    path(r'vacancy/<int:pk>/update_by_moderator/', views.PUT_vacancy_BY_MODERATOR, name='vacancy-by-moderator'),
 
     # М-М (Вакансии города)
     # м-м - удаление из заявки, изменение количества/значения в м-м
-    # path(r'vacancycity/', views.VacancyCityList.as_view(), name='vacancy-list'),
-    # path(r'vacancycity/<int:pk>/', views.VacancyCityList.as_view(), name='vacancy-list'),
     path(r'vacancycity/<int:pk>/update/', views.VacancyCityList.as_view(), name='vacancycity-update'),
     path(r'vacancycity/<int:pk>/delete/', views.VacancyCityList.as_view(), name='vacancycity-delete'),
 ]
