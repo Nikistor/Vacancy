@@ -94,7 +94,9 @@ def GET_city(request, pk=None, format=None):
     """
     Возвращает информацию о конкретном городе
     """
-    city = get_object_or_404(City, pk=pk)
+    if request.method == 'GET':
+        city = get_object_or_404(City, pk=pk)
+        
     serializer = CitySerializer(city)
     return Response(serializer.data)
 
@@ -126,11 +128,11 @@ def process_image_from_url(feature, url_photo):
 
 # Добавляет новую запись в заявку
 @api_view(['POST'])
-def POST_city_in_vacancy(request, city_pk, format=None):
+def POST_city_in_vacancy(request, pk, format=None):
     try:
-        city = City.objects.get(pk=city_pk)
+        city = City.objects.get(pk=pk)
     except City.DoesNotExist:
-        return Response(f"ERROR! Object City does not exist with ID {city_pk}",
+        return Response(f"ERROR! Object City does not exist with ID {pk}",
                         status=status.HTTP_404_NOT_FOUND)
 
     # Находим заявку с таким статусом
@@ -280,17 +282,17 @@ def GET_vacancy(request, pk=None, format=None):
 
         return Response(response)
 
-@api_view(['PUT'])
-def PUT_vacancy(request, pk, format=None):
-    """
-    Обновляет информацию о вакансии
-    """
-    vacancy = get_object_or_404(Vacancy, pk=pk)
-    vacancy_serializer = VacancySerializer(vacancy, data=request.data, partial=True)
-    if vacancy_serializer.is_valid():
-        vacancy_serializer.save()
-        return Response(vacancy_serializer.data)
-    return Response(vacancy_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# @api_view(['PUT'])
+# def PUT_vacancy(request, pk, format=None):
+#     """
+#     Обновляет информацию о вакансии
+#     """
+#     vacancy = get_object_or_404(Vacancy, pk=pk)
+#     vacancy_serializer = VacancySerializer(vacancy, data=request.data, partial=True)
+#     if vacancy_serializer.is_valid():
+#         vacancy_serializer.save()
+#         return Response(vacancy_serializer.data)
+#     return Response(vacancy_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT'])
 def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
@@ -369,7 +371,3 @@ class VacancyCityList(APIView):
         # Затем удалим сам объект VacancyCity
         vacancycity.delete()
         return Response('Successfully deleted', status=status.HTTP_204_NO_CONTENT)
-
-
-
-

@@ -35,7 +35,7 @@ urlpatterns = [
     path(r'city/<int:pk>/', views.GET_city, name='city-id'),
     path(r'city/<int:pk>/update/', views.CityList.as_view(), name='city-list'),
     path(r'city/<int:pk>/delete/', views.CityList.as_view(), name='city-list'),
-    path(r'city/<int:city_pk>/create_vacancy/', views.POST_city_in_vacancy, name='create-vacancy'),
+    path(r'city/<int:pk>/create_vacancy/', views.POST_city_in_vacancy, name='create-vacancy'),
 
     # ЗАЯВКА (Вакансия)
     # Заявки - список, одна запись, изменение, статусы создателя, статусы модератора, удаление
