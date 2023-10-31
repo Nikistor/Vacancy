@@ -25,7 +25,7 @@ CREATE TABLE vacancy (
   id SERIAL PRIMARY KEY,
   name_vacancy VARCHAR NOT NULL,
   date_create DATE NOT NULL,
-  date_publication DATE NULL,
+  date_form DATE NULL,
   date_close DATE NULL,
   status_vacancy VARCHAR NOT NULL,
   id_employer INT NULL,
@@ -87,12 +87,12 @@ INSERT INTO city (name, foundation_date, grp, climate, square, status, descripti
 SELECT * FROM city;
 
 -- ВАКАНСИЯ (Заявки)
-INSERT INTO vacancy (name_vacancy, date_create, date_publication, date_close, status_vacancy, id_employer, id_moderator) VALUES
-    ('Инженер', '01-01-2023', '10-01-2023', '01-03-2023', 'Закрыта', 1, 6),
-    ('Программист', '20-05-2023', '01-06-2023', '01-08-2023', 'Опубликована', 2, 6),
-    ('Аналитик', '24-09-2023', '05-10-2023', '30-11-2023', 'Создана', 3, 6),
-    ('Преподаватель', '20-09-2023', '30-09-2023', '30-11-2023', 'Отклонена', 4, 6),
-    ('Кассир', '20-09-2023', '30-09-2023', '30-11-2023', 'На модерации', 5, 6);
+INSERT INTO vacancy (name_vacancy, date_create, date_form, date_close, status_vacancy, id_employer, id_moderator) VALUES
+    ('Инженер', '01-01-2023', '10-01-2023', '01-03-2023', 'Создана', 1, 6),
+    ('Программист', '20-05-2023', '01-06-2023', '01-08-2023', 'На модерации', 2, 6),
+    ('Аналитик', '24-09-2023', '05-10-2023', '30-11-2023', 'Отклонена', 3, 6),
+    ('Преподаватель', '20-09-2023', '30-09-2023', '30-11-2023', 'Опубликована', 4, 6),
+    ('Кассир', '20-09-2023', '30-09-2023', '30-11-2023', 'Закрыта', 5, 6);
 -- Вывод таблицы вакансия
 SELECT * FROM vacancy;
 
@@ -134,7 +134,7 @@ SELECT * FROM vacancy as v
 WHERE v.date_create > '19-09-2023';
 
 -- Отображение всех городов
-\conn vacancy_city
+--\conn vacancy_city
 SELECT * FROM users;
 SELECT * FROM city;
 SELECT * FROM vacancy;

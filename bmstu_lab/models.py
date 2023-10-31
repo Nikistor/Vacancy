@@ -31,7 +31,7 @@ class Vacancy(models.Model):
     id = models.BigAutoField(primary_key=True, serialize=False)
     name_vacancy = models.CharField(max_length=255)
     date_create = models.DateField()
-    date_publication = models.DateField(blank=True, null=True)
+    date_form = models.DateField(blank=True, null=True)
     date_close = models.DateField(blank=True, null=True)
     status_vacancy = models.CharField(max_length=50)
     id_employer = models.ForeignKey(

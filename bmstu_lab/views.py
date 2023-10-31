@@ -299,7 +299,7 @@ def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
     """
     Обновляет информацию о вакансии
     """
-    if request.data['status_vacancy'] in ['Создана', 'Закрыта']:
+    if request.data['status_vacancy'] in ['Создана', 'На модерации']:
         try:
             vacancy = Vacancy.objects.get(pk=pk)
         except Vacancy.DoesNotExist:
@@ -317,7 +317,7 @@ def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
             except Users.DoesNotExist:
                 return Response("New employer not found", status=status.HTTP_404_NOT_FOUND)
     else:
-        return Response('You are not moderator! Check status in [Создана, Закрыта]')
+        return Response('You are not moderator! Check status in [Создана, На модерации]')
 
 @api_view(['PUT'])
 def PUT_vacancy_BY_MODERATOR(request, pk, format=None):
