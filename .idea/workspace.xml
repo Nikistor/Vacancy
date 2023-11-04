@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="86500b19-874e-4ca4-a035-ce21004aede5" name="Changes" comment="" />
+=======
+    <list default="true" id="8cd3797f-2ac3-4be2-8df7-5b4786f48ba2" name="Changes" comment="" />
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,6 +84,7 @@
       <created>1697723678631</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
+<<<<<<< Updated upstream
       <updated>1697723678631</updated>
       <workItem from="1697723681315" duration="3793000" />
       <workItem from="1697902610643" duration="4199000" />
@@ -119,6 +124,37 @@
       <workItem from="1698668056948" duration="3501000" />
       <workItem from="1698741589486" duration="1034000" />
       <workItem from="1698742680904" duration="55000" />
+=======
+      <updated>1695808679980</updated>
+      <workItem from="1695808683775" duration="16090000" />
+      <workItem from="1696234321860" duration="11096000" />
+      <workItem from="1696272358358" duration="404000" />
+      <workItem from="1696336135406" duration="2188000" />
+      <workItem from="1696346656560" duration="873000" />
+      <workItem from="1696402312713" duration="5722000" />
+      <workItem from="1696408438266" duration="694000" />
+      <workItem from="1696409225975" duration="721000" />
+      <workItem from="1696410902208" duration="72000" />
+      <workItem from="1696418629094" duration="2216000" />
+      <workItem from="1696442725087" duration="139000" />
+      <workItem from="1696442965969" duration="1522000" />
+      <workItem from="1696444971013" duration="639000" />
+      <workItem from="1696670492025" duration="167000" />
+      <workItem from="1696770770598" duration="10803000" />
+      <workItem from="1696782235416" duration="3502000" />
+      <workItem from="1696786859009" duration="1013000" />
+      <workItem from="1696840175842" duration="239000" />
+      <workItem from="1696849745824" duration="7911000" />
+      <workItem from="1696863515646" duration="61000" />
+      <workItem from="1696878664178" duration="302000" />
+      <workItem from="1697007132886" duration="275000" />
+      <workItem from="1697017735278" duration="46000" />
+      <workItem from="1697024120611" duration="1451000" />
+      <workItem from="1697025665128" duration="597000" />
+      <workItem from="1697044686480" duration="2917000" />
+      <workItem from="1697053829282" duration="2567000" />
+      <workItem from="1698743050313" duration="182000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
