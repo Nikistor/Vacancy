@@ -35,6 +35,32 @@ class CityList(APIView):
         # Получение данные после запроса с БД (через ORM)
         city = self.model_class.objects.all()
 
+        # # Получение данные с MINIO и обновление ссылок на него (фотография) и измением данные
+        # try:
+        #     try:
+        #         DB = DB_Minio()
+        #         for obj in city:
+        #             # Проверяет, существует ли такой объект в бакете
+        #             check_object = DB.stat_object(bucket_name='vacancy_city', object_name=obj.name + '.jpg')
+        #             if bool(check_object):
+        #                 url_photo = DB.get_presigned_url(
+        #                     method='GET', bucket_name='vacancy_city',
+        #                     object_name=obj.name + '.jpg'
+        #                 )
+        #             else:
+        #                 url_photo = DB.get_presigned_url(
+        #                     method='GET', bucket_name='vacancy_city',
+        #                     object_name='Default.jpg'
+        #                 )
+        #
+        #             obj.url_photo = url_photo
+        #             # Сохраняем обновленный объект в БД
+        #             obj.save()
+        #     except Exception as ex:
+        #         print(f"Ошибка при обработке объекта {obj.name}: {str(ex)}")
+        # except Exception as ex:
+        #     print('Ошибка соединения с БД Minio', ex)
+
         if name and foundation_date and grp and climate and square and status and description is None:
             pass
         else:
@@ -99,6 +125,36 @@ def GET_city(request, pk=None, format=None):
 
     serializer = CitySerializer(city)
     return Response(serializer.data)
+
+# Получение информации о городе с фотографией Minio
+# @api_view(['GET'])
+# def GET_city(request, pk=None, format=None):
+#     """
+#     Возвращает информацию о конкретном городе
+#     """
+#     if request.method == 'GET':
+#         city = get_object_or_404(City, pk=pk)
+#         try:
+#             DB = DB_Minio()
+#             # Проверяет, существует ли такой объект в бакете
+#             check_object = DB.stat_object(bucket_name='vacancy_city', object_name=city.name + '.jpg')
+#             if bool(check_object):
+#                 url_photo = DB.get_presigned_url(
+#                     method='GET', bucket_name='vacancy_city',
+#                     object_name=city.name + '.jpg'
+#                 )
+#             else:
+#                 url_photo = DB.get_presigned_url(
+#                     method='GET', bucket_name='vacancy_city',
+#                     object_name='Default.jpg'
+#                 )
+#             city.url_photo = url_photo
+#             city.save()
+#         except Exception as ex:
+#             print(f"Ошибка при обработке объекта {city.name}: {str(ex)}")
+#
+#         serializer = CitySerializer(city)
+#         return Response(serializer.data)
 
 def process_image_from_url(feature, url_photo):
     if url_photo:
