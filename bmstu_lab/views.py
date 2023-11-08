@@ -192,14 +192,14 @@ def POST_city_in_vacancy(request, pk, format=None):
                         status=status.HTTP_404_NOT_FOUND)
 
     # Находим заявку с таким статусом
-    vacancy = Vacancy.objects.filter(status_vacancy='Создана').last()
+    vacancy = Vacancy.objects.filter(status_vacancy='Введён').last()
     # Если такой заявки нет, то создаем
     if vacancy == None:
-        # status_vacancy [Закрыта, Опубликована, Создана, Отклонена, На модерации]
-
+        # status_vacancy [Создана, На модерации, Опубликована, Отклонена, Закрыта]
+        # status_vacancy [Введён, В работе, Завершён, Отменен, Удалён]
         vacancy = Vacancy.objects.create(
             date_create=datetime.now(),
-            status_vacancy='Создана',
+            status_vacancy='Введён',
         )
 
     # Создание записи в таблице VacancyCity для связи между Vacancy и City
@@ -355,7 +355,7 @@ def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
     """
     Обновляет информацию о вакансии
     """
-    if request.data['status_vacancy'] in ['Создана', 'На модерации']:
+    if request.data['status_vacancy'] in ['Введён', 'В работе']:
         try:
             vacancy = Vacancy.objects.get(pk=pk)
         except Vacancy.DoesNotExist:
@@ -373,14 +373,14 @@ def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
             except Users.DoesNotExist:
                 return Response("New employer not found", status=status.HTTP_404_NOT_FOUND)
     else:
-        return Response('You are not moderator! Check status in [Создана, На модерации]')
+        return Response('You are not moderator! Check status in [Ведён, В работе]')
 
 @api_view(['PUT'])
 def PUT_vacancy_BY_MODERATOR(request, pk, format=None):
     """
     Обновляет информацию о вакансии
     """
-    if request.data['status_vacancy'] in ['На модерации', 'Закрыта', 'Опубликована', 'Отклонена']:
+    if request.data['status_vacancy'] in ['В работе', 'Завершён', 'Отменен', 'Удалён']:
         try:
             vacancy = Vacancy.objects.get(pk=pk)
         except Vacancy.DoesNotExist:
@@ -399,7 +399,7 @@ def PUT_vacancy_BY_MODERATOR(request, pk, format=None):
                 return Response("New moderator not found", status=status.HTTP_404_NOT_FOUND)
         # return Response(mars_station_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
-        return Response('You are not moderator! Check status in [На модерации, Закрыта, Опубликована, Отклонена]')
+        return Response('You are not moderator! Check status in [В работе, Завершён, Отменен, Удалён]')
 
 # Вакансии города
 class VacancyCityList(APIView):
