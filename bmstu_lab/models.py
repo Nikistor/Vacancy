@@ -1,69 +1,53 @@
+from datetime import datetime
+
 from django.db import models
 
-# Create your models here.
-# Пользователь
-class Users(models.Model):
-    id = models.BigAutoField(primary_key=True, serialize=False)
-    login = models.CharField(max_length=80)
-    password = models.CharField(max_length=120)
-    admin = models.BooleanField()
-    class Meta:
-        managed = False
-        db_table = 'users'
+from django.utils import timezone
 
-# Город
+
 class City(models.Model):
-    id = models.BigAutoField(primary_key=True, serialize=False)
-    name = models.CharField(max_length=100)
-    foundation_date = models.IntegerField(null=True, blank=True)
-    grp = models.BigIntegerField(null=True, blank=True)
-    climate = models.CharField(max_length=255, null=True, blank=True)
-    square = models.IntegerField(null=True, blank=True)
-    status = models.BooleanField()
-    description = models.CharField(max_length=2000, null=True, blank=True)
-    url_photo = models.CharField(max_length=1000, null=True, blank=True)
-    class Meta:
-        managed = False
-        db_table = 'city'
+    STATUS_CHOICES = (
+        (1, 'Действует'),
+        (2, 'Удалена'),
+    )
 
-# Вакансия
+    name = models.CharField(max_length=100, default="Москва", verbose_name="Название")
+    foundation_date = models.IntegerField(default=1147, verbose_name="Дата основания")
+    grp = models.BigIntegerField(default=20450000000000, verbose_name="ВВП")
+    climate = models.CharField(max_length=255, default="умеренный", verbose_name="Климат")
+    square = models.IntegerField(default=2561, verbose_name="Площадь")
+    status = models.IntegerField(choices=STATUS_CHOICES, default=1, verbose_name="Статус")
+    description = models.CharField(max_length=2000, default="Москва — столица и крупнейший город России. Сюда ведут многие пути и человеческие судьбы, с этим городом связано множество роковых и знаменательных событий истории, людских радостей и надежд, несчастий и разочарований, разумеется, легенд, мифов и преданий. Москва — блистательный город, во всех отношениях достойный называться столицей. Здесь великолепные памятники архитектуры и живописные парки, самые лучшие магазины и высокие небоскребы, длинное метро и заполненные вокзалы. Москва никогда не спит, здесь трудятся с утра до поздней ночи, а затем веселятся до утра.", null=True, blank=True, verbose_name="Описание")
+    image = models.ImageField(upload_to="cities", default="cities/Москва.jpg", verbose_name="Фото")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Город"
+        verbose_name_plural = "Города"
+
+
 class Vacancy(models.Model):
-    id = models.BigAutoField(primary_key=True, serialize=False)
-    name_vacancy = models.CharField(max_length=255)
-    date_create = models.DateField()
-    date_form = models.DateField(blank=True, null=True)
-    date_close = models.DateField(blank=True, null=True)
-    status_vacancy = models.CharField(max_length=50)
-    id_employer = models.ForeignKey(
-        Users,
-        on_delete=models.CASCADE,  # Это действие, которое будет выполнено при удалении связанной записи
-        db_column='id_employer',  # Имя поля в базе данных
+    STATUS_CHOICES = (
+        (1, 'Введён'),
+        (2, 'В работе'),
+        (3, 'Завершён'),
+        (4, 'Отменён'),
+        (5, 'Удалён'),
     )
-    id_moderator = models.ForeignKey(
-        Users,
-        on_delete=models.CASCADE,  # Это действие, которое будет выполнено при удалении связанной записи
-        db_column='id_moderator',  # Имя поля в базе данных
-        related_name='id_employer_moderator',  # Пользовательское имя
-    )
-    class Meta:
-        managed = False
-        db_table = 'vacancy'
 
-# ВакансииГорода
-class VacancyCity(models.Model):
-    id = models.BigAutoField(primary_key=True, serialize=False)
-    # Добавляем внешний ключ к другой модели
-    id_city = models.ForeignKey(
-        City,
-        on_delete=models.CASCADE,  # Это действие, которое будет выполнено при удалении связанной записи
-        db_column='id_city',  # Имя поля в базе данных
-    )
-    id_vacancy = models.ForeignKey(
-        Vacancy,
-        on_delete=models.CASCADE,  # Это действие, которое будет выполнено при удалении связанной записи
-        db_column='id_vacancy',  # Имя поля в базе данных
-    )
-    quantity_vacancy = models.IntegerField(null=True, blank=True)
+    name = models.CharField(max_length=255, verbose_name="Название")
+    status = models.IntegerField(choices=STATUS_CHOICES, default=1, verbose_name="Статус")
+    date_created = models.DateTimeField(default=datetime.now(tz=timezone.utc), verbose_name="Дата создания")
+    date_of_formation = models.DateTimeField(default=datetime.now(tz=timezone.utc), verbose_name="Дата формирования")
+    date_complete = models.DateTimeField(default=datetime.now(tz=timezone.utc), verbose_name="Дата завершения")
+
+    cities = models.ManyToManyField(City, verbose_name="Города", null=True)
+
+    def __str__(self):
+        return self.name
+
     class Meta:
-        managed = False
-        db_table = 'vacancycity'
+        verbose_name = "Вакансия"
+        verbose_name_plural = "Вакансии"

@@ -15,39 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from bmstu_lab import views
-from django.urls import include, path
-from rest_framework import routers
-
-router = routers.DefaultRouter()
+from django.urls import path, include
 
 urlpatterns = [
-    # Панель админа
-    path('admin/', admin.site.urls),
-
-    # Включим URL-пути для вашего API через include
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
-    # УСЛУГА (Город)
-    # Услуги - список, одна запись, добавление, изменение, удаление, добавление в заявку
-    path(r'city/', views.CityList.as_view(), name='city-list'),
-    path(r'city/<int:pk>/', views.GET_city, name='city-id'),
-    path(r'city/<int:pk>/update/', views.CityList.as_view(), name='city-list'),
-    path(r'city/<int:pk>/delete/', views.CityList.as_view(), name='city-list'),
-    path(r'city/<int:pk>/create_vacancy/', views.POST_city_in_vacancy, name='create-vacancy'),
-
-    # ЗАЯВКА (Вакансия)
-    # Заявки - список, одна запись, изменение, статусы создателя, статусы модератора, удаление
-    path(r'vacancy/', views.VacancyList.as_view(), name='vacancy-list'),
-    path(r'vacancy/<int:pk>/', views.GET_vacancy, name='vacancy-id'),
-    path(r'vacancy/<int:pk>/update/', views.VacancyList.as_view(), name='vacancy-list'),
-    path(r'vacancy/<int:pk>/delete/', views.VacancyList.as_view(), name='vacancy-list'),
-    path(r'vacancy/<int:pk>/update_by_employer/', views.PUT_vacancy_BY_EMPLOYER, name='vacancy-by-employer'),
-    path(r'vacancy/<int:pk>/update_by_moderator/', views.PUT_vacancy_BY_MODERATOR, name='vacancy-by-moderator'),
-
-    # М-М (Вакансии города)
-    # м-м - удаление из заявки, изменение количества/значения в м-м
-    path(r'vacancycity/<int:pk>/update/', views.VacancyCityList.as_view(), name='vacancycity-update'),
-    path(r'vacancycity/<int:pk>/delete/', views.VacancyCityList.as_view(), name='vacancycity-delete'),
+    path('', include('bmstu_lab.urls')),
+    path('admin/', admin.site.urls)
 ]

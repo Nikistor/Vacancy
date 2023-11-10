@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="86500b19-874e-4ca4-a035-ce21004aede5" name="Changes" comment="" />
+    <list default="true" id="5382dbb7-989f-4acc-9f7f-be65150d1c9d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,18 +14,10 @@
       </list>
     </option>
   </component>
-  <component name="InvalidFacetManager">
-    <ignored-facets>
-      <facet id="lab_3_REST_API/invalid/Django" />
-    </ignored-facets>
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 2
-}</component>
-  <component name="ProjectId" id="2Wz7i3vKqzKRWJ060TtK2UOysTb" />
+  <component name="ProjectId" id="2XweHAmIadl2HfYbR9fapt8zXc7" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -35,22 +27,17 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/work",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/LAB3_REST_API"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_3_REST_API" />
-      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_3_REST_API\bmstu_lab" />
-      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_3_REST_API\templates" />
-      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_3_REST_API\bmstu" />
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\LAB3_REST_API" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="lab_3_REST_API" type="Python.DjangoServer" factoryName="Django server">
-      <module name="lab_3_REST_API" />
+    <configuration name="LAB3_REST_API" type="Python.DjangoServer" factoryName="Django server">
+      <module name="LAB3_REST_API" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -76,56 +63,15 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="86500b19-874e-4ca4-a035-ce21004aede5" name="Changes" comment="" />
-      <created>1697723678631</created>
+      <changelist id="5382dbb7-989f-4acc-9f7f-be65150d1c9d" name="Changes" comment="" />
+      <created>1699544478828</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1697723678631</updated>
-      <workItem from="1697723681315" duration="3793000" />
-      <workItem from="1697902610643" duration="4199000" />
-      <workItem from="1697918987298" duration="495000" />
-      <workItem from="1697920018912" duration="176000" />
-      <workItem from="1697920417099" duration="709000" />
-      <workItem from="1697956975802" duration="161000" />
-      <workItem from="1697959237636" duration="2582000" />
-      <workItem from="1697962914495" duration="1703000" />
-      <workItem from="1697965166977" duration="16349000" />
-      <workItem from="1697985462597" duration="16825000" />
-      <workItem from="1698010308368" duration="15000" />
-      <workItem from="1698010387138" duration="95000" />
-      <workItem from="1698010508712" duration="7000" />
-      <workItem from="1698010738950" duration="408000" />
-      <workItem from="1698011342424" duration="17000" />
-      <workItem from="1698012839187" duration="4000" />
-      <workItem from="1698013659608" duration="198000" />
-      <workItem from="1698041728005" duration="915000" />
-      <workItem from="1698042673693" duration="208000" />
-      <workItem from="1698042906911" duration="6000" />
-      <workItem from="1698044491824" duration="85000" />
-      <workItem from="1698045384773" duration="1523000" />
-      <workItem from="1698058763894" duration="4269000" />
-      <workItem from="1698148346330" duration="10358000" />
-      <workItem from="1698174508674" duration="427000" />
-      <workItem from="1698236513517" duration="11989000" />
-      <workItem from="1698262563319" duration="5211000" />
-      <workItem from="1698388046405" duration="3732000" />
-      <workItem from="1698417198132" duration="3620000" />
-      <workItem from="1698420982775" duration="48000" />
-      <workItem from="1698484240470" duration="3691000" />
-      <workItem from="1698489367417" duration="197000" />
-      <workItem from="1698490359296" duration="17000" />
-      <workItem from="1698648037293" duration="8409000" />
-      <workItem from="1698659626460" duration="370000" />
-      <workItem from="1698668056948" duration="3501000" />
-      <workItem from="1698741589486" duration="1034000" />
-      <workItem from="1698742680904" duration="55000" />
-      <workItem from="1698742803663" duration="7000" />
-      <workItem from="1698759038959" duration="2328000" />
-      <workItem from="1699104291880" duration="355000" />
-      <workItem from="1699104716724" duration="229000" />
-      <workItem from="1699175834325" duration="297000" />
-      <workItem from="1699176231081" duration="396000" />
-      <workItem from="1699431080255" duration="7344000" />
+      <updated>1699544478828</updated>
+      <workItem from="1699544481358" duration="399000" />
+      <workItem from="1699544922889" duration="433000" />
+      <workItem from="1699634072965" duration="85000" />
+      <workItem from="1699646623578" duration="156000" />
     </task>
     <servers />
   </component>

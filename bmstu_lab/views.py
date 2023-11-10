@@ -1,429 +1,329 @@
-from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 from rest_framework import status
-from bmstu_lab.serializers import CitySerializer, VacancySerializer, VacancyCitySerializer, UsersSerializer
-from bmstu_lab.models import City, Vacancy, VacancyCity, Users
-from rest_framework.views import APIView
 from rest_framework.decorators import api_view
-from bmstu_lab.DB_Minio import DB_Minio
-from datetime import datetime
-from PIL import Image
-import io
-import requests
-from rest_framework import generics
-from django.utils import timezone
+from rest_framework.response import Response
 
-# Город
-class CityList(APIView):
-    model_class = City
-    serializer_class = CitySerializer
+from .serializers import *
+from .models import *
 
-    def get(self, request, format=None):
-        """
-        Возвращает список городов
-        """
 
-        # Получим параметры запроса из URL
-        name = request.GET.get('name')
-        foundation_date = request.GET.get('foundation_date')
-        grp = request.GET.get('grp')
-        climate = request.GET.get('climate')
-        square = request.GET.get('square')
-        status = request.GET.get('status')
-        description = request.GET.get('description')
+@api_view(["GET"])
+def search_city(request):
+    """
+    Возвращает список городов
+    """
 
-        # Получение данные после запроса с БД (через ORM)
-        city = self.model_class.objects.all()
+    # Получим параметры запроса из URL
+    name = request.GET.get('name')
+    foundation_date = request.GET.get('foundation_date')
+    grp = request.GET.get('grp')
+    climate = request.GET.get('climate')
+    square = request.GET.get('square')
+    description = request.GET.get('description')
 
-        # # Получение данные с MINIO и обновление ссылок на него (фотография) и измением данные
-        # try:
-        #     try:
-        #         DB = DB_Minio()
-        #         for obj in city:
-        #             # Проверяет, существует ли такой объект в бакете
-        #             check_object = DB.stat_object(bucket_name='vacancy_city', object_name=obj.name + '.jpg')
-        #             if bool(check_object):
-        #                 url_photo = DB.get_presigned_url(
-        #                     method='GET', bucket_name='vacancy_city',
-        #                     object_name=obj.name + '.jpg'
-        #                 )
-        #             else:
-        #                 url_photo = DB.get_presigned_url(
-        #                     method='GET', bucket_name='vacancy_city',
-        #                     object_name='Default.jpg'
-        #                 )
-        #
-        #             obj.url_photo = url_photo
-        #             # Сохраняем обновленный объект в БД
-        #             obj.save()
-        #     except Exception as ex:
-        #         print(f"Ошибка при обработке объекта {obj.name}: {str(ex)}")
-        # except Exception as ex:
-        #     print('Ошибка соединения с БД Minio', ex)
+    # Получение данные после запроса с БД (через ORM)
+    city = City.objects.filter(status=1)
 
-        if name and foundation_date and grp and climate and square and status and description is None:
-            pass
-        else:
-            # Применим фильтры на основе параметров запроса, если они предоставлены
-            if name:
-                city = city.filter(name__icontains=name)
-            if foundation_date:
-                city = city.filter(foundation_date=foundation_date)
-            if grp:
-                city = city.filter(grp=grp)
-            if climate:
-                city = city.filter(climate__icontains=climate)
-            if square:
-                city = city.filter(square=square)
-            if status:
-                city = city.filter(status=status)
-            if description:
-                city = city.filter(description__icontains=description)
+    # Применим фильтры на основе параметров запроса, если они предоставлены
+    if name:
+        city = city.filter(name__icontains=name)
+    if foundation_date:
+        city = city.filter(foundation_date=foundation_date)
+    if grp:
+        city = city.filter(grp=grp)
+    if climate:
+        city = city.filter(climate__icontains=climate)
+    if square:
+        city = city.filter(square=square)
+    if description:
+        city = city.filter(description__icontains=description)
 
-        serializer = self.serializer_class(city, many=True)
-        return Response(serializer.data)
+    serializer = CitySerializer(city, many=True)
+    return Response(serializer.data)
 
-    def post(self, request, format=None):
-        """
-        Добавляет новую запись
-        """
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def put(self, request, pk, format=None):
-        """
-        Обновляет информацию о городе
-        """
-        city = get_object_or_404(self.model_class, pk=pk)
-        serializer = self.serializer_class(city, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        """
-        Удаляет информацию о городе
-        """
-        if not self.model_class.objects.filter(pk=pk).exists():
-            return Response(f"ERROR! There is no such object!")
-
-        city = get_object_or_404(self.model_class, pk=pk)
-        city.delete()
-        return Response('Successfully deleted', status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['GET'])
-def GET_city(request, pk=None, format=None):
+def get_city_by_id(request, city_id):
     """
     Возвращает информацию о конкретном городе
     """
-    if request.method == 'GET':
-        city = get_object_or_404(City, pk=pk)
+    if not City.objects.filter(pk=city_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    serializer = CitySerializer(city)
+    # Получение данные после запроса с БД (через ORM)
+    city = City.objects.get(pk=city_id)
+
+    serializer = CitySerializer(city, many=False)
     return Response(serializer.data)
 
-# Получение информации о городе с фотографией Minio
-# @api_view(['GET'])
-# def GET_city(request, pk=None, format=None):
+
+@api_view(['PUT'])
+def update_city(request, city_id):
+    """
+    Обновляет информацию о городе
+    """
+
+    if not City.objects.filter(pk=city_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    city = City.objects.get(pk=city_id)
+    serializer = CitySerializer(city, data=request.data, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+def create_city(request):
+    """
+    Добавляет новый город
+    """
+    City.objects.create()
+
+    cities = City.objects.all()
+    serializer = CitySerializer(cities, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(["DELETE"])
+def delete_city(request, city_id):
+    """
+    Удаляет город
+    """
+    if not City.objects.filter(pk=city_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    city = City.objects.get(pk=city_id)
+    city.status = 2
+    city.save()
+
+    cities = City.objects.filter(status=1)
+    serializer = CitySerializer(cities, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(["POST"])
+def add_city_to_vacancy(request, city_id):
+    """
+    Добавляет город в вакансию
+    """
+
+    if not City.objects.filter(pk=city_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    city = City.objects.get(pk=city_id)
+
+    vacancy = Vacancy.objects.filter(status=1).last()
+
+    if vacancy is None:
+        vacancy = Vacancy.objects.create()
+
+    vacancy.cities.add(city)
+    vacancy.save()
+
+    serializer = VacancySerializer(vacancy.cities, many=True)
+
+    return Response(serializer.data)
+
+
+@api_view(["GET"])
+def get_city_image(request, city_id):
+    """
+    Возвращает фото города
+    """
+    if not City.objects.filter(pk=city_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    service = City.objects.get(pk=city_id)
+
+    return HttpResponse(service.image, content_type="image/png")
+
+
+@api_view(["PUT"])
+def update_city_image(request, city_id):
+    """
+    Обновляет фото города
+    """
+    if not City.objects.filter(pk=city_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    city = City.objects.get(pk=city_id)
+    serializer = CitySerializer(city, data=request.data, many=False, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
+
+
+# @api_view(["GET"])
+# def get_vacancies(request):
 #     """
-#     Возвращает информацию о конкретном городе
+#     Возвращает список вакансий
 #     """
-#     if request.method == 'GET':
-#         city = get_object_or_404(City, pk=pk)
-#         try:
-#             DB = DB_Minio()
-#             # Проверяет, существует ли такой объект в бакете
-#             check_object = DB.stat_object(bucket_name='vacancy_city', object_name=city.name + '.jpg')
-#             if bool(check_object):
-#                 url_photo = DB.get_presigned_url(
-#                     method='GET', bucket_name='vacancy_city',
-#                     object_name=city.name + '.jpg'
-#                 )
-#             else:
-#                 url_photo = DB.get_presigned_url(
-#                     method='GET', bucket_name='vacancy_city',
-#                     object_name='Default.jpg'
-#                 )
-#             city.url_photo = url_photo
-#             city.save()
-#         except Exception as ex:
-#             print(f"Ошибка при обработке объекта {city.name}: {str(ex)}")
+#     vacancies = Vacancy.objects.all()
 #
-#         serializer = CitySerializer(city)
-#         return Response(serializer.data)
+#     request_status = request.GET.get("status")
+#     if request_status:
+#         vacancies = vacancies.filter(status=request_status)
+#
+#     serializer = VacancySerializer(vacancies, many=True)
+#
+#     return Response(serializer.data)
 
-def process_image_from_url(feature, url_photo):
-    if url_photo:
-        DB = DB_Minio()
-        DB.put_object_url(bucket_name='vacancy_city', object_name=feature+'.jpg', url=url_photo)
-        # Загрузите данные по URL
-        response = requests.get(url_photo)
-        if response.status_code == 200:
-            # Возврат данных в бинарном виде (в байтах)
-            image_data = response.content
-
-            # Используйте Pillow для обработки изображения и сохранения его в формате JPEG
-            try:
-                image = Image.open(io.BytesIO(image_data))
-                image = image.convert('RGB')  # Преобразование изображения в формат RGB
-                output_buffer = io.BytesIO()
-                image.save(output_buffer, format='JPEG')
-                jpeg_data = output_buffer.getvalue()
-                return jpeg_data
-            except Exception as ex:
-                return None  # Возвращаем None в случае ошибки при обработке изображения
-        else:
-            return None  # Возвращаем None в случае ошибки при получении изображения по URL
-    else:
-        # Если нет URL изображения, возвращаем None
-        return None
-
-# Добавляет новую запись в заявку
-@api_view(['POST'])
-def POST_city_in_vacancy(request, pk, format=None):
-    try:
-        city = City.objects.get(pk=pk)
-    except City.DoesNotExist:
-        return Response(f"ERROR! Object City does not exist with ID {pk}",
-                        status=status.HTTP_404_NOT_FOUND)
-
-    # Находим заявку с таким статусом
-    vacancy = Vacancy.objects.filter(status_vacancy='Введён').last()
-    # Если такой заявки нет, то создаем
-    if vacancy == None:
-        # status_vacancy [Создана, На модерации, Опубликована, Отклонена, Закрыта]
-        # status_vacancy [Введён, В работе, Завершён, Отменен, Удалён]
-        vacancy = Vacancy.objects.create(
-            date_create=datetime.now(),
-            status_vacancy='Введён',
-        )
-
-    # Создание записи в таблице VacancyCity для связи между Vacancy и City
-    VacancyCity.objects.create(
-        id_city=city,
-        id_vacancy=vacancy,
-    )
-    return Response(f'Successfully created, vacancy ID: {vacancy.id}', status=status.HTTP_201_CREATED)
-
-# Вакансия
-class VacancyList(APIView):
-    model_class = Vacancy
-    serializer_class = VacancySerializer
-
-    def get(self, request, format=None):
-        """
-        Возвращает список вакансий
-        """
-        vacancy = Vacancy.objects.all()
-
-        # Получим параметры запроса из URL
-        name_vacancy = request.GET.get('name_vacancy')
-        status_vacancy = request.GET.get('status_vacancy')
-        date_create = request.GET.get('date_create')
-        date_close = request.GET.get('date_close')
-        # Дата после
-        date_form_after = request.GET.get('date_form_after')
-        # Дата ДО
-        date_form_before = request.GET.get('date_form_before')
-
-        # Проверяет, пустой запрос на фильтр
-        if all(item is None for item in
-               [name_vacancy, status_vacancy, date_create, date_close, date_form_after, date_form_before]):
-            # Сериализиуем его, чтобы получить в формате JSON
-            vacancy_serializer = self.serializer_class(vacancy, many=True)
-        else:
-            # Применим фильтры на основе параметров запроса, если они предоставлены
-            if name_vacancy:
-                vacancy = vacancy.filter(name_vacancy=name_vacancy)
-            if status_vacancy:
-                vacancy = vacancy.filter(status_vacancy=status_vacancy)
-            if date_create:
-                vacancy = vacancy.filter(date_create=date_create)
-            if date_close:
-                vacancy = vacancy.filter(date_close=date_close)
-
-            # Дата формирования ПОСЛЕ
-            if date_form_after and date_form_before is None:
-                vacancy = vacancy.filter(date_form__gte=date_form_after)
-            # Дата формирования ДО
-            if date_form_after is None and date_form_before:
-                vacancy = vacancy.filter(date_form__lte=date_form_before)
-
-            # Дата формирования ПОСЛЕ и ДО
-            if date_form_after and date_form_before:
-                if date_form_after > date_form_before:
-                    return Response('Mistake! It is impossible to sort when "BEFORE" exceeds "AFTER"!')
-                vacancy = vacancy.filter(date_form__gte=date_form_after)
-                vacancy = vacancy.filter(date_form__lte=date_form_before)
-
-            # Сериализуем результаты запроса
-            vacancy_serializer = VacancySerializer(vacancy, many=True)
-
-        return Response(vacancy_serializer.data)
-
-    def post(self, request, format=None):
-        """
-        Добавляет новую запись
-        """
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def put(self, request, pk, format=None):
-        """
-        Обновляет информацию о вакансии
-        """
-        vacancy = get_object_or_404(self.model_class, pk=pk)
-        serializer = self.serializer_class(vacancy, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        """
-        Удаляет информацию о вакансии
-        """
-        if not self.model_class.objects.filter(pk=pk).exists():
-            return Response(f"ERROR! There is no such object!")
-
-        vacancy = get_object_or_404(self.model_class, pk=pk)
-        vacancy.delete()
-        return Response('Successfully deleted', status=status.HTTP_204_NO_CONTENT)
-
-@api_view(['GET'])
-def GET_vacancy(request, pk=None, format=None):
+@api_view(["GET"])
+def get_vacancies(request):
     """
-    Возвращает информацию о конкретном вакансии
+    Возвращает список вакансий
     """
-    if request.method == 'GET':
-        try:
-            vacancy = get_object_or_404(Vacancy, pk=pk)
-        except Vacancy.DoesNotExist:
-            return Response({"error": "Vacancy not found"}, status=status.HTTP_404_NOT_FOUND)
+    vacancies = Vacancy.objects.all()
 
-        try:
-            moderator = get_object_or_404(Users, id=vacancy.id_moderator.id)
-        except Users.DoesNotExist:
-            moderator = None  # Модератор не найден, устанавливаем moderator в None
+    # Получим параметры запроса из URL
+    status = request.GET.get('status')
+    date_created = request.GET.get('date_created')
+    date_complete = request.GET.get('date_complete')
+    date_form_after = request.GET.get('date_form_after')
+    date_form_before = request.GET.get('date_form_before')
 
-        try:
-            employer = get_object_or_404(Users, id=vacancy.id_employer.id)
-        except Users.DoesNotExist:
-            employer = None  # Работодатель не найден, устанавливаем employer в None
+    # Применим фильтры на основе параметров запроса, если они предоставлены
+    if status:
+        vacancies = vacancies.filter(status=status)
+    if date_created:
+        vacancies = vacancies.filter(date_created=date_created)
+    if date_complete:
+        vacancies = vacancies.filter(date_complete=date_complete)
 
-        vacancycities = VacancyCity.objects.filter(id_vacancy=vacancy.id)
-        city_serializer = []
+    # Дата формирования ПОСЛЕ
+    if date_form_after and date_form_before is None:
+        vacancies = vacancies.filter(date_of_formation__gte=date_form_after)
+    # Дата формирования ДО
+    if date_form_after is None and date_form_before:
+        vacancies = vacancies.filter(date_of_formation__lte=date_form_before)
 
-        for vacancycity in vacancycities:
-            try:
-                city = get_object_or_404(City, id=vacancycity.id_city.id)
-                city_serializer.append(CitySerializer(city).data)
-            except City.DoesNotExist:
-                city_serializer.append({"error": "City not found"})
+    # Дата формирования ПОСЛЕ и ДО
+    if date_form_after and date_form_before:
+        if date_form_after > date_form_before:
+            return Response('Mistake! It is impossible to sort when "BEFORE" exceeds "AFTER"!')
+        vacancies = vacancies.filter(date_of_formation__gte=date_form_after, date_of_formation__lte=date_form_before)
 
-        response = {
-            "moderator": UsersSerializer(moderator).data,
-            "employer": UsersSerializer(employer).data,
-            "vacancy": VacancySerializer(vacancy).data,
-            "city": city_serializer
-        }
+    serializer = VacancySerializer(vacancies, many=True)
+    return Response(serializer.data)
 
-        return Response(response)
 
-# @api_view(['PUT'])
-# def PUT_vacancy(request, pk, format=None):
-#     """
-#     Обновляет информацию о вакансии
-#     """
-#     vacancy = get_object_or_404(Vacancy, pk=pk)
-#     vacancy_serializer = VacancySerializer(vacancy, data=request.data, partial=True)
-#     if vacancy_serializer.is_valid():
-#         vacancy_serializer.save()
-#         return Response(vacancy_serializer.data)
-#     return Response(vacancy_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@api_view(["GET"])
+def get_vacancy_by_id(request, vacancy_id):
+    """
+    Возвращает информацию о конкретной вакансии
+    """
+    if not Vacancy.objects.filter(pk=vacancy_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['PUT'])
-def PUT_vacancy_BY_EMPLOYER(request, pk, format=None):
+    vacancy = Vacancy.objects.get(pk=vacancy_id)
+    serializer = VacancySerializer(vacancy, many=False)
+
+    return Response(serializer.data)
+
+
+@api_view(["PUT"])
+def update_vacancy(request, vacancy_id):
     """
     Обновляет информацию о вакансии
     """
-    if request.data['status_vacancy'] in ['Введён', 'В работе']:
-        try:
-            vacancy = Vacancy.objects.get(pk=pk)
-        except Vacancy.DoesNotExist:
-            return Response("Vacancy not found", status=status.HTTP_404_NOT_FOUND)
+    if not Vacancy.objects.filter(pk=vacancy_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-        vacancy.status_vacancy = request.data['status_vacancy']
+    vacancy = Vacancy.objects.get(pk=vacancy_id)
+    serializer = VacancySerializer(vacancy, data=request.data, many=False, partial=True)
 
-        if 'id_employer' in request.data:
-            new_id_employer = request.data['id_employer']
-            try:
-                new_employer = Users.objects.get(pk=new_id_employer)
-                vacancy.id_employer = new_employer
-                vacancy.save()
-                return Response("Successfully updated status")
-            except Users.DoesNotExist:
-                return Response("New employer not found", status=status.HTTP_404_NOT_FOUND)
-    else:
-        return Response('You are not moderator! Check status in [Ведён, В работе]')
+    if serializer.is_valid():
+        serializer.save()
 
-@api_view(['PUT'])
-def PUT_vacancy_BY_MODERATOR(request, pk, format=None):
+    vacancy.status = 1
+    vacancy.save()
+
+    return Response(serializer.data)
+
+
+@api_view(["PUT"])
+def update_status_user(request, vacancy_id):
     """
-    Обновляет информацию о вакансии
+    Пользователь обновляет информацию о вакансии
     """
-    if request.data['status_vacancy'] in ['В работе', 'Завершён', 'Отменен', 'Удалён']:
-        try:
-            vacancy = Vacancy.objects.get(pk=pk)
-        except Vacancy.DoesNotExist:
-            return Response("Vacancy not found", status=status.HTTP_404_NOT_FOUND)
+    if not Vacancy.objects.filter(pk=vacancy_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-        vacancy.status_vacancy = request.data['status_vacancy']
+    vacancy = Vacancy.objects.get(pk=vacancy_id)
+    vacancy.status = 2
+    vacancy.save()
 
-        if 'id_moderator' in request.data:
-            new_id_moderator = request.data['id_moderator']
-            try:
-                new_moderator = Users.objects.get(pk=new_id_moderator)
-                vacancy.id_moderator = new_moderator
-                vacancy.save()
-                return Response("Successfully updated status")
-            except Users.DoesNotExist:
-                return Response("New moderator not found", status=status.HTTP_404_NOT_FOUND)
-        # return Response(mars_station_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    else:
-        return Response('You are not moderator! Check status in [В работе, Завершён, Отменен, Удалён]')
+    serializer = VacancySerializer(vacancy, many=False)
 
-# Вакансии города
-class VacancyCityList(APIView):
-    model_class = VacancyCity
-    serializer_class = VacancyCitySerializer
+    return Response(serializer.data)
 
-    def put(self, request, pk, format=None):
-        """
-        Обновляет информацию о вакансии города
-        """
-        vacancycity = get_object_or_404(self.model_class, pk=pk)
-        serializer = self.serializer_class(vacancycity, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk, format=None):
-        """
-        Удаляет информацию о вакансии города
-        """
-        vacancycity = get_object_or_404(self.model_class, pk=pk)
-        # Удаляет связанную вакансию
-        vacancycity.id_vacancy.delete()
-        # Затем удалим сам объект VacancyCity
-        vacancycity.delete()
-        return Response('Successfully deleted', status=status.HTTP_204_NO_CONTENT)
+@api_view(["PUT"])
+def update_status_admin(request, vacancy_id):
+    """
+    Модератор обновляет информацию о вакансии
+    """
+    if not Vacancy.objects.filter(pk=vacancy_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    request_status = request.data["status"]
+
+    if request_status in [1, 5]:
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    vacancy = Vacancy.objects.get(pk=vacancy_id)
+
+    lesson_status = vacancy.status
+
+    if lesson_status in [3, 4, 5]:
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    vacancy.status = request_status
+    vacancy.save()
+
+    serializer = VacancySerializer(vacancy, many=False)
+
+    return Response(serializer.data)
+
+
+@api_view(["DELETE"])
+def delete_vacancy(request, vacancy_id):
+    """
+    Удаляет вакансию
+    """
+    if not Vacancy.objects.filter(pk=vacancy_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    vacancy = Vacancy.objects.get(pk=vacancy_id)
+    vacancy.status = 5
+    vacancy.save()
+
+    return Response(status=status.HTTP_200_OK)
+
+
+@api_view(["DELETE"])
+def delete_city_from_vacancy(request, vacancy_id, city_id):
+    """
+    Удаляет город из вакансии
+    """
+    if not Vacancy.objects.filter(pk=vacancy_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if not City.objects.filter(pk=city_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    vacancy = Vacancy.objects.get(pk=vacancy_id)
+    vacancy.cities.remove(City.objects.get(pk=city_id))
+    vacancy.save()
+
+    serializer = CitySerializer(vacancy.cities, many=True)
+
+    return Response(serializer.data)

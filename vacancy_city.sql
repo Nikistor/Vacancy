@@ -88,7 +88,7 @@ SELECT * FROM city;
 
 -- ВАКАНСИЯ (Заявки)
 INSERT INTO vacancy (name_vacancy, date_create, date_form, date_close, status_vacancy, id_employer, id_moderator) VALUES
-    ('Инженер', '01-01-2023', '10-01-2023', '01-03-2023', 'Ведён', 1, 6),
+    ('Инженер', '01-01-2023', '10-01-2023', '01-03-2023', 'Введён', 1, 6),
     ('Программист', '20-05-2023', '01-06-2023', '01-08-2023', 'В работе', 2, 6),
     ('Аналитик', '24-09-2023', '05-10-2023', '30-11-2023', 'Завершён', 3, 6),
     ('Преподаватель', '20-09-2023', '30-09-2023', '30-11-2023', 'Отменен', 4, 6),
@@ -134,7 +134,6 @@ SELECT * FROM vacancy as v
 WHERE v.date_create > '19-09-2023';
 
 -- Отображение всех городов
---\conn vacancy_city
 SELECT * FROM users;
 SELECT * FROM city;
 SELECT * FROM vacancy;
