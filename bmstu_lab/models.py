@@ -12,13 +12,14 @@ class City(models.Model):
     )
 
     name = models.CharField(max_length=100, default="Москва", verbose_name="Название")
+    description = models.CharField(max_length=2000, default="Москва — столица и крупнейший город России. Сюда ведут многие пути и человеческие судьбы, с этим городом связано множество роковых и знаменательных событий истории, людских радостей и надежд, несчастий и разочарований, разумеется, легенд, мифов и преданий. Москва — блистательный город, во всех отношениях достойный называться столицей. Здесь великолепные памятники архитектуры и живописные парки, самые лучшие магазины и высокие небоскребы, длинное метро и заполненные вокзалы. Москва никогда не спит, здесь трудятся с утра до поздней ночи, а затем веселятся до утра.", null=True, blank=True, verbose_name="Описание")
+    status = models.IntegerField(choices=STATUS_CHOICES, default=1, verbose_name="Статус")
     foundation_date = models.IntegerField(default=1147, verbose_name="Дата основания")
-    grp = models.BigIntegerField(default=20450000000000, verbose_name="ВВП")
+    grp = models.FloatField(default=13.1, verbose_name="Население (млн)")
     climate = models.CharField(max_length=255, default="умеренный", verbose_name="Климат")
     square = models.IntegerField(default=2561, verbose_name="Площадь")
-    status = models.IntegerField(choices=STATUS_CHOICES, default=1, verbose_name="Статус")
-    description = models.CharField(max_length=2000, default="Москва — столица и крупнейший город России. Сюда ведут многие пути и человеческие судьбы, с этим городом связано множество роковых и знаменательных событий истории, людских радостей и надежд, несчастий и разочарований, разумеется, легенд, мифов и преданий. Москва — блистательный город, во всех отношениях достойный называться столицей. Здесь великолепные памятники архитектуры и живописные парки, самые лучшие магазины и высокие небоскребы, длинное метро и заполненные вокзалы. Москва никогда не спит, здесь трудятся с утра до поздней ночи, а затем веселятся до утра.", null=True, blank=True, verbose_name="Описание")
     image = models.ImageField(upload_to="cities", default="cities/Москва.jpg", verbose_name="Фото")
+
 
     def __str__(self):
         return self.name

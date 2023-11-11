@@ -22,14 +22,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/LAB3_REST_API"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/LAB3_REST_API&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\LAB3_REST_API" />
@@ -72,6 +72,10 @@
       <workItem from="1699544922889" duration="433000" />
       <workItem from="1699634072965" duration="85000" />
       <workItem from="1699646623578" duration="156000" />
+      <workItem from="1699657980644" duration="46000" />
+      <workItem from="1699709824434" duration="413000" />
+      <workItem from="1699710932739" duration="1275000" />
+      <workItem from="1699712544918" duration="24000" />
     </task>
     <servers />
   </component>
