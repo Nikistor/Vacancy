@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a1d6bf69-b224-48b4-9727-38b3518ba8d9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/bmstu/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu/asgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu/wsgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/static/css/examp.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/static/photo/city/Волгоград.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/static/photo/city/Екатеринбург.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/static/photo/city/Киров.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/static/photo/city/Москва.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/static/photo/city/Санкт-Петербург.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/static/photo/vakansia.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bmstu_lab/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/cities.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/city.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/city_element.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/filters.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/.idea/lab_1_basic_templating.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu/asgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu/wsgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/static/css/examp.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/static/photo/city/Волгоград.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/static/photo/city/Екатеринбург.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/static/photo/city/Киров.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/static/photo/city/Москва.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/static/photo/city/Санкт-Петербург.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/static/photo/vakansia.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/bmstu_lab/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/templates/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/templates/cities.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/templates/city.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/templates/city_element.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/templates/filters.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab_1_basic_templating/templates/index.html" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2Vqf3soWWPiT9snUvOBUD4KoeAv" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/GitHub/WEB"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_1_basic_templating\templates" />
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_1_basic_templating\bmstu_lab" />
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab_1_basic_templating\bmstu" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="DjangoTestsConfigurationType">
+      <module name="LAB1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
+      <module name="LAB1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="LAB1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="WEB" type="Python.DjangoServer" factoryName="Django server">
+      <module name="lab_1_basic_templating" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\nikis\AppData\Local\Programs\Python\Python39\python.exe" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="http://127.0.0.1:8000/" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Python.FlaskServer">
+      <module name="LAB1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="LAB1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docs" factoryName="Docutils task">
+      <module name="LAB1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="docutils_input_file" value="" />
+      <option name="docutils_output_file" value="" />
+      <option name="docutils_params" value="" />
+      <option name="docutils_task" value="" />
+      <option name="docutils_open_in_browser" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docs" factoryName="Sphinx task">
+      <module name="LAB1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="docutils_input_file" value="" />
+      <option name="docutils_output_file" value="" />
+      <option name="docutils_params" value="" />
+      <option name="docutils_task" value="" />
+      <option name="docutils_open_in_browser" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Autodetect">
+      <module name="LAB1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <module name="LAB1" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a1d6bf69-b224-48b4-9727-38b3518ba8d9" name="Changes" comment="" />
+      <created>1695568335133</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695568335133</updated>
+      <workItem from="1695568337459" duration="175000" />
+      <workItem from="1695632038307" duration="43000" />
+      <workItem from="1695639103425" duration="4840000" />
+      <workItem from="1695802278697" duration="35000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
