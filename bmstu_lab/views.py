@@ -47,8 +47,9 @@ def search_city(request):
         city = city.filter(description__icontains=description)
 
     serializer = CitySerializer(city, many=True)
-    # LAB4
+    # для работы с лаб4
     # return Response(serializer.data)
+
     resp = {
         "draft_vacancy": get_draft_vacancy_id(),
         "cities": serializer.data
