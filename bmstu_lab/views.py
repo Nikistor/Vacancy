@@ -12,13 +12,10 @@ def search_city(request):
     """
     Возвращает список городов
     """
-
     def get_draft_vacancy_id():
         vacancy = Vacancy.objects.filter(status=1).first()
-
         if vacancy is None:
             return None
-
         return vacancy.pk
 
     # Получим параметры запроса из URL
@@ -54,7 +51,6 @@ def search_city(request):
         "draft_vacancy": get_draft_vacancy_id(),
         "cities": serializer.data
     }
-
     return Response(resp)
 
 
