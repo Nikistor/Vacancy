@@ -1,7 +1,5 @@
 from datetime import datetime
-
 from django.db import models
-
 from django.utils import timezone
 
 
@@ -19,7 +17,6 @@ class City(models.Model):
     climate = models.CharField(max_length=255, default="умеренный", verbose_name="Климат")
     square = models.IntegerField(default=2561, verbose_name="Площадь")
     image = models.ImageField(upload_to="cities", default="cities/Москва.jpg", verbose_name="Фото")
-
 
     def __str__(self):
         return self.name
@@ -41,8 +38,8 @@ class Vacancy(models.Model):
     name = models.CharField(max_length=255, verbose_name="Название")
     status = models.IntegerField(choices=STATUS_CHOICES, default=1, verbose_name="Статус")
     date_created = models.DateTimeField(default=datetime.now(tz=timezone.utc), verbose_name="Дата создания")
-    date_of_formation = models.DateTimeField(default=datetime.now(tz=timezone.utc), verbose_name="Дата формирования")
-    date_complete = models.DateTimeField(default=datetime.now(tz=timezone.utc), verbose_name="Дата завершения")
+    date_of_formation = models.DateTimeField(null=True, blank=True, verbose_name="Дата формирования")
+    date_complete = models.DateTimeField(null=True, blank=True, verbose_name="Дата завершения")
 
     cities = models.ManyToManyField(City, verbose_name="Города", null=True)
 

@@ -22,14 +22,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/LAB3_REST_API&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/LAB3_REST_API",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\LAB3_REST_API" />
@@ -76,6 +83,18 @@
       <workItem from="1699709824434" duration="413000" />
       <workItem from="1699710932739" duration="1275000" />
       <workItem from="1699712544918" duration="24000" />
+      <workItem from="1699713439349" duration="35000" />
+      <workItem from="1699785673037" duration="9000" />
+      <workItem from="1699993359323" duration="180000" />
+      <workItem from="1699993734143" duration="140000" />
+      <workItem from="1699993882620" duration="491000" />
+      <workItem from="1699994384452" duration="682000" />
+      <workItem from="1699995082727" duration="405000" />
+      <workItem from="1700047001608" duration="337000" />
+      <workItem from="1700047390044" duration="2060000" />
+      <workItem from="1700388076973" duration="929000" />
+      <workItem from="1700389027262" duration="754000" />
+      <workItem from="1700390750935" duration="211000" />
     </task>
     <servers />
   </component>

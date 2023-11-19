@@ -5,13 +5,21 @@ from rest_framework.response import Response
 
 from .serializers import *
 from .models import *
-
+from datetime import datetime, timezone
 
 @api_view(["GET"])
 def search_city(request):
     """
     Возвращает список городов
     """
+
+    def get_draft_vacancy_id():
+        vacancy = Vacancy.objects.filter(status=1).first()
+
+        if vacancy is None:
+            return None
+
+        return vacancy.pk
 
     # Получим параметры запроса из URL
     name = request.GET.get('name')
@@ -39,7 +47,14 @@ def search_city(request):
         city = city.filter(description__icontains=description)
 
     serializer = CitySerializer(city, many=True)
-    return Response(serializer.data)
+    # LAB4
+    # return Response(serializer.data)
+    resp = {
+        "draft_vacancy": get_draft_vacancy_id(),
+        "cities": serializer.data
+    }
+
+    return Response(resp)
 
 
 @api_view(['GET'])
@@ -62,7 +77,6 @@ def update_city(request, city_id):
     """
     Обновляет информацию о городе
     """
-
     if not City.objects.filter(pk=city_id).exists():
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -112,7 +126,6 @@ def add_city_to_vacancy(request, city_id):
     """
     Добавляет город в вакансию
     """
-
     if not City.objects.filter(pk=city_id).exists():
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -121,7 +134,7 @@ def add_city_to_vacancy(request, city_id):
     vacancy = Vacancy.objects.filter(status=1).last()
 
     if vacancy is None:
-        vacancy = Vacancy.objects.create()
+        vacancy = Vacancy.objects.create(date_created=datetime.now(timezone.utc), date_of_formation=None, date_complete=None)
 
     vacancy.cities.add(city)
     vacancy.save()
@@ -244,6 +257,8 @@ def update_vacancy(request, vacancy_id):
         serializer.save()
 
     vacancy.status = 1
+    # if vacancy.status == 1:
+    #     vacancy.date_created = datetime.now()
     vacancy.save()
 
     return Response(serializer.data)
@@ -258,13 +273,19 @@ def update_status_user(request, vacancy_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
-    vacancy.status = 2
-    vacancy.save()
+    # vacancy.status = 2
+    # vacancy.save()
+    if vacancy.status != 1:
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    else:
+        vacancy.status = 2
+        vacancy.save()
+        if vacancy.status == 2:
+            vacancy.date_of_formation = datetime.now()
+            vacancy.save()
 
     serializer = VacancySerializer(vacancy, many=False)
-
     return Response(serializer.data)
-
 
 @api_view(["PUT"])
 def update_status_admin(request, vacancy_id):
@@ -274,25 +295,48 @@ def update_status_admin(request, vacancy_id):
     if not Vacancy.objects.filter(pk=vacancy_id).exists():
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    request_status = request.data["status"]
-
-    if request_status in [1, 5]:
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    # request_status = request.data["status"]
+    #
+    # if request_status in [1, 5]:
+    #     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    #
+    # vacancy = Vacancy.objects.get(pk=vacancy_id)
+    #
+    # lesson_status = vacancy.status
+    #
+    # if lesson_status in [2, 3, 4, 5]:
+    #     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    #
+    # vacancy.status = request_status
+    # vacancy.save()
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
-
-    lesson_status = vacancy.status
-
-    if lesson_status in [3, 4, 5]:
+    if vacancy.status != 2:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    else:
+        vacancy.status = 4
+        vacancy.save()
+        if vacancy.status == 4:
+            vacancy.date_complete = datetime.now()
+            vacancy.save()
 
-    vacancy.status = request_status
-    vacancy.save()
+    # request_status = request.data["status"]
+    #
+    # if request_status not in [3, 4]:
+    #     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    #
+    # vacancy = Vacancy.objects.get(pk=vacancy_id)
+    #
+    # vacancy_status = vacancy.status
+    #
+    # if vacancy_status != 2:
+    #     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    #
+    # vacancy.status = request_status
+    # vacancy.save()
 
     serializer = VacancySerializer(vacancy, many=False)
-
     return Response(serializer.data)
-
 
 @api_view(["DELETE"])
 def delete_vacancy(request, vacancy_id):
@@ -303,6 +347,10 @@ def delete_vacancy(request, vacancy_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
+
+    if vacancy.status != 1:
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
     vacancy.status = 5
     vacancy.save()
 
