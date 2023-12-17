@@ -25,6 +25,18 @@ class City(models.Model):
         verbose_name = "Город"
         verbose_name_plural = "Города"
 
+class Users(models.Model):
+    id = models.AutoField(primary_key=True, verbose_name="ID")
+    login = models.CharField(max_length=50, unique=True, verbose_name="Логин")
+    password = models.CharField(max_length=50, verbose_name="Пароль")
+    admin = models.BooleanField(default=False, verbose_name="Админ")
+
+    def __str__(self):
+        return self.login
+
+    class Meta:
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
 
 class Vacancy(models.Model):
     STATUS_CHOICES = (
@@ -42,6 +54,8 @@ class Vacancy(models.Model):
     date_complete = models.DateTimeField(null=True, blank=True, verbose_name="Дата завершения")
 
     cities = models.ManyToManyField(City, verbose_name="Города", null=True)
+
+    users = models.ForeignKey(Users, on_delete=models.CASCADE, verbose_name="Пользователь", null=True, blank=True)
 
     def __str__(self):
         return self.name

@@ -71,7 +71,7 @@ WSGI_APPLICATION = 'bmstu.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "city_vacancy",
+        "NAME": "cities_vacancy",
         'USER': 'postgres',
         'PASSWORD': 'postgres'
     }

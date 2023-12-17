@@ -12,11 +12,11 @@ def search_city(request):
     """
     Возвращает список городов
     """
-    def get_draft_vacancy_id():
-        vacancy = Vacancy.objects.filter(status=1).first()
-        if vacancy is None:
-            return None
-        return vacancy.pk
+    # def get_draft_vacancy_id():
+    #     vacancy = Vacancy.objects.filter(status=1).first()
+    #     if vacancy is None:
+    #         return None
+    #     return vacancy.pk
 
     # Получим параметры запроса из URL
     name = request.GET.get('name')
@@ -45,13 +45,13 @@ def search_city(request):
 
     serializer = CitySerializer(city, many=True)
     # для работы с лаб4
-    # return Response(serializer.data)
+    return Response(serializer.data)
 
-    resp = {
-        "draft_vacancy": get_draft_vacancy_id(),
-        "cities": serializer.data
-    }
-    return Response(resp)
+    # resp = {
+    #     "draft_vacancy": get_draft_vacancy_id(),
+    #     "cities": serializer.data
+    # }
+    # return Response(resp)
 
 
 @api_view(['GET'])
@@ -131,8 +131,17 @@ def add_city_to_vacancy(request, city_id):
     vacancy = Vacancy.objects.filter(status=1).last()
 
     if vacancy is None:
-        vacancy = Vacancy.objects.create(date_created=datetime.now(timezone.utc), date_of_formation=None, date_complete=None)
+        vacancy = Vacancy.objects.create(date_created=datetime.now(timezone.utc), date_of_formation=None, date_complete=None, status=1)
 
+        if vacancy.status == 1:
+            if vacancy.users is not None:
+                vacancy.users.login = "user1"
+                vacancy.users.save()
+            else:
+                new_user = Users.objects.create(login="user1")
+                vacancy.users = new_user
+                vacancy.save()
+        vacancy.save()
     vacancy.cities.add(city)
     vacancy.save()
 
@@ -199,8 +208,8 @@ def get_vacancies(request):
     date_complete = request.GET.get('date_complete')
     date_form_after = request.GET.get('date_form_after')
     date_form_before = request.GET.get('date_form_before')
+    user_login = request.GET.get('user_login')
 
-    # Применим фильтры на основе параметров запроса, если они предоставлены
     if status:
         vacancies = vacancies.filter(status=status)
     if date_created:
@@ -220,6 +229,13 @@ def get_vacancies(request):
         if date_form_after > date_form_before:
             return Response('Mistake! It is impossible to sort when "BEFORE" exceeds "AFTER"!')
         vacancies = vacancies.filter(date_of_formation__gte=date_form_after, date_of_formation__lte=date_form_before)
+
+    if user_login:
+        vacancies = vacancies.filter(users__login=user_login)
+
+    for vacancy in vacancies:
+        if vacancy.status == 4 and vacancy.users is not None:
+            vacancy.users.login = "root"
 
     serializer = VacancySerializer(vacancies, many=True)
     return Response(serializer.data)
@@ -253,12 +269,18 @@ def update_vacancy(request, vacancy_id):
     if serializer.is_valid():
         serializer.save()
 
-    vacancy.status = 1
-    # if vacancy.status == 1:
-    #     vacancy.date_created = datetime.now()
-    vacancy.save()
+        vacancy.status = 1
+        # if vacancy.status == 1:
+        #     vacancy.date_created = datetime.now()
+        vacancy.save()
 
-    return Response(serializer.data)
+        vacancy.date_of_formation = None
+        vacancy.date_complete = None
+        vacancy.save()
+
+        return Response(serializer.data)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(["PUT"])
@@ -270,19 +292,28 @@ def update_status_user(request, vacancy_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
-    # vacancy.status = 2
-    # vacancy.save()
+
     if vacancy.status != 1:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
     else:
         vacancy.status = 2
         vacancy.save()
+
         if vacancy.status == 2:
             vacancy.date_of_formation = datetime.now()
             vacancy.save()
 
+            if vacancy.users is not None:
+                vacancy.users.login = "user1"
+                vacancy.users.save()
+            else:
+                new_user = Users.objects.create(login="user1")
+                vacancy.users = new_user
+                vacancy.save()
+
     serializer = VacancySerializer(vacancy, many=False)
     return Response(serializer.data)
+
 
 @api_view(["PUT"])
 def update_status_admin(request, vacancy_id):
@@ -292,45 +323,35 @@ def update_status_admin(request, vacancy_id):
     if not Vacancy.objects.filter(pk=vacancy_id).exists():
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    # request_status = request.data["status"]
-    #
-    # if request_status in [1, 5]:
-    #     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    #
-    # vacancy = Vacancy.objects.get(pk=vacancy_id)
-    #
-    # lesson_status = vacancy.status
-    #
-    # if lesson_status in [2, 3, 4, 5]:
-    #     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    #
-    # vacancy.status = request_status
-    # vacancy.save()
+    request_status = request.data["status"]
+
+    if request_status not in [3, 4]:
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
+
+    vacancy_status = vacancy.status
+
     if vacancy.status != 2:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
     else:
         vacancy.status = 4
         vacancy.save()
+
         if vacancy.status == 4:
             vacancy.date_complete = datetime.now()
             vacancy.save()
 
-    # request_status = request.data["status"]
-    #
-    # if request_status not in [3, 4]:
-    #     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    #
-    # vacancy = Vacancy.objects.get(pk=vacancy_id)
-    #
-    # vacancy_status = vacancy.status
-    #
-    # if vacancy_status != 2:
-    #     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    #
-    # vacancy.status = request_status
-    # vacancy.save()
+            if vacancy.users is not None:
+                vacancy.users.login = "root"
+                vacancy.users.save()
+            else:
+                new_user = Users.objects.create(login="root")
+                vacancy.users = new_user
+                vacancy.save()
+
+    vacancy.status = request_status
+    vacancy.save()
 
     serializer = VacancySerializer(vacancy, many=False)
     return Response(serializer.data)
