@@ -20,9 +20,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/nikis/Downloads/Лаб №5/work",
+    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab5/work",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -37,6 +42,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="work.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
@@ -64,6 +70,26 @@
       <option name="presentableId" value="Default" />
       <updated>1701639821937</updated>
       <workItem from="1701639827072" duration="1094000" />
+      <workItem from="1701686685618" duration="1721000" />
+      <workItem from="1701689814911" duration="739000" />
+      <workItem from="1701690640286" duration="1766000" />
+      <workItem from="1701767244575" duration="93000" />
+      <workItem from="1701767362083" duration="46000" />
+      <workItem from="1701767490434" duration="2287000" />
+      <workItem from="1701776568723" duration="243000" />
+      <workItem from="1701777181216" duration="14000" />
+      <workItem from="1701843073611" duration="131000" />
+      <workItem from="1702244544565" duration="662000" />
+      <workItem from="1702819779403" duration="408000" />
+      <workItem from="1702991699695" duration="4854000" />
+      <workItem from="1702996802654" duration="172000" />
+      <workItem from="1702997007830" duration="30000" />
+      <workItem from="1703001889308" duration="1920000" />
+      <workItem from="1703005523992" duration="996000" />
+      <workItem from="1703057228926" duration="2378000" />
+      <workItem from="1703059644828" duration="9000" />
+      <workItem from="1703060611851" duration="452000" />
+      <workItem from="1703148983550" duration="2152000" />
     </task>
     <servers />
   </component>

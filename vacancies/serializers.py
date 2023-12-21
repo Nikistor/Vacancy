@@ -20,6 +20,8 @@ class VacancySerializer(serializers.ModelSerializer):
     cities = CitySerializer(read_only=True, many=True)
     user = UserSerializer(read_only=True, many=False)
 
+    moderator = UserSerializer(read_only=True)
+
     class Meta:
         # Модель, которую мы сериализуем
         model = Vacancy

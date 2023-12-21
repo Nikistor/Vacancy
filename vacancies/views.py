@@ -10,6 +10,7 @@ from .jwt_helper import create_access_token
 from .permissions import *
 from .serializers import *
 from .models import *
+from dateutil import parser as date_parser
 
 access_token_lifetime = settings.JWT["ACCESS_TOKEN_LIFETIME"].total_seconds()
 
@@ -56,8 +57,8 @@ def search_city(request):
     serializer = CitySerializer(city, many=True)
 
     resp = {
-        "cities": serializer.data,
-        "draft_vacancy": get_draft_vacancy_id()
+        "draft_vacancy": get_draft_vacancy_id(),
+        "cities": serializer.data
     }
 
     return Response(resp)
@@ -131,13 +132,35 @@ def delete_city(request, city_id):
     return Response(serializer.data)
 
 
+# @api_view(["POST"])
+# @permission_classes([IsAuthenticated])
+# def add_city_to_vacancy(request, city_id):
+#     """
+#     Добавляет город в вакансию
+#     """
+#     if not City.objects.filter(pk=city_id).exists():
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+#
+#     city = City.objects.get(pk=city_id)
+#
+#     vacancy = Vacancy.objects.filter(status=1).last()
+#
+#     if vacancy is None:
+#         vacancy = Vacancy.objects.create()
+#
+#     vacancy.cities.add(city)
+#     vacancy.save()
+#
+#     serializer = VacancySerializer(vacancy.cities, many=True)
+#
+#     return Response(serializer.data)
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def add_city_to_vacancy(request, city_id):
     """
     Добавляет город в вакансию
     """
-
     if not City.objects.filter(pk=city_id).exists():
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -146,8 +169,13 @@ def add_city_to_vacancy(request, city_id):
     vacancy = Vacancy.objects.filter(status=1).last()
 
     if vacancy is None:
-        vacancy = Vacancy.objects.create()
+        vacancy = Vacancy.objects.create(date_created=datetime.now(timezone.utc), date_of_formation=None, date_complete=None)
 
+    # добавлено
+    token = get_access_token(request)
+    payload = get_jwt_payload(token)
+    user = CustomUser.objects.get(pk=payload["user_id"])
+    vacancy.user = user
     vacancy.cities.add(city)
     vacancy.save()
 
@@ -265,9 +293,15 @@ def update_vacancy(request, vacancy_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
+    request.data['date_of_formation'] = None
+    request.data['date_complete'] = None
     serializer = VacancySerializer(vacancy, data=request.data, many=False, partial=True)
 
+    if 'status' in request.data and request.data['status'] == 1:
+        request.data['moderator'] = None
+
     if serializer.is_valid():
+        serializer.validated_data['moderator'] = None
         serializer.save()
 
     vacancy.status = 1
@@ -275,6 +309,30 @@ def update_vacancy(request, vacancy_id):
 
     return Response(serializer.data)
 
+
+# @api_view(["PUT"])
+# @permission_classes([IsAuthenticated])
+# def update_status_user(request, vacancy_id):
+#     """
+#     Пользователь обновляет информацию о вакансии
+#     """
+#     if not Vacancy.objects.filter(pk=vacancy_id).exists():
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+#
+#     vacancy = Vacancy.objects.get(pk=vacancy_id)
+#
+#     if vacancy.status != 1:
+#         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+#     else:
+#         vacancy.status = 2
+#         vacancy.save()
+#         if vacancy.status == 2:
+#             vacancy.date_of_formation = datetime.now()
+#             vacancy.save()
+#
+#     serializer = VacancySerializer(vacancy, many=False)
+#
+#     return Response(serializer.data)
 
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
@@ -289,14 +347,50 @@ def update_status_user(request, vacancy_id):
 
     if vacancy.status != 1:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    vacancy.status = 2
-    vacancy.save()
-
+    else:
+        vacancy.status = 2
+        vacancy.save()
+        if vacancy.status == 2:
+            vacancy.date_of_formation = datetime.now()
+            vacancy.save()
+    # добавлено
+    token = get_access_token(request)
+    payload = get_jwt_payload(token)
+    user = CustomUser.objects.get(pk=payload["user_id"])
     serializer = VacancySerializer(vacancy, many=False)
+    vacancy.user = user
+    vacancy.save()
 
     return Response(serializer.data)
 
+
+# @api_view(["PUT"])
+# @permission_classes([IsModerator])
+# def update_status_admin(request, vacancy_id):
+#     """
+#     Модератор обновляет информацию о вакансии
+#     """
+#     if not Vacancy.objects.filter(pk=vacancy_id).exists():
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+#
+#     request_status = request.data["status"]
+#
+#     if request_status not in [3, 4]:
+#         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+#
+#     vacancy = Vacancy.objects.get(pk=vacancy_id)
+#
+#     if vacancy.status != 2:
+#         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+#
+#     vacancy.status = request_status
+#     if request_status in [4]:
+#         vacancy.date_complete = datetime.now()
+#         vacancy.save()
+#
+#     serializer = VacancySerializer(vacancy, many=False)
+#
+#     return Response(serializer.data)
 
 @api_view(["PUT"])
 @permission_classes([IsModerator])
@@ -314,16 +408,21 @@ def update_status_admin(request, vacancy_id):
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
 
-    if vacancy.status != 2:
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    vacancy_status = vacancy.status
 
+    if vacancy_status in [3, 4, 5]:
+        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    # добавлено
+    token = get_access_token(request)
+    payload = get_jwt_payload(token)
+    moderator = CustomUser.objects.get(pk=payload["user_id"])
     vacancy.status = request_status
+    vacancy.date_complete = datetime.now()
+    vacancy.moderator = moderator
     vacancy.save()
 
     serializer = VacancySerializer(vacancy, many=False)
-
     return Response(serializer.data)
-
 
 @api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
