@@ -12,11 +12,14 @@ class CitySerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ['login']  # Укажите необходимые поля пользователя
+        fields = ['login']
+
 
 class VacancySerializer(serializers.ModelSerializer):
     cities = CitySerializer(read_only=True, many=True)
-    users = UserSerializer(read_only=True)  # Добавьте поле пользователя в сериализатор
+
+    users = UserSerializer(read_only=True)
+    moderator = UserSerializer(read_only=True)
 
     class Meta:
         # Модель, которую мы сериализуем

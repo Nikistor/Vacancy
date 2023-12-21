@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -131,17 +132,17 @@ def add_city_to_vacancy(request, city_id):
     vacancy = Vacancy.objects.filter(status=1).last()
 
     if vacancy is None:
-        vacancy = Vacancy.objects.create(date_created=datetime.now(timezone.utc), date_of_formation=None, date_complete=None, status=1)
+        vacancy = Vacancy.objects.create(date_created=datetime.now(timezone.utc), date_of_formation=None, date_complete=None)
 
         if vacancy.status == 1:
-            if vacancy.users is not None:
-                vacancy.users.login = "user1"
-                vacancy.users.save()
-            else:
-                new_user = Users.objects.create(login="user1")
+            if vacancy.users is None:
+                try:
+                    new_user = Users.objects.create(login="user1")
+                except IntegrityError:
+                    new_user = Users.objects.get(login="user1")
                 vacancy.users = new_user
                 vacancy.save()
-        vacancy.save()
+
     vacancy.cities.add(city)
     vacancy.save()
 
@@ -179,21 +180,6 @@ def update_city_image(request, city_id):
 
     return Response(serializer.data)
 
-
-# @api_view(["GET"])
-# def get_vacancies(request):
-#     """
-#     Возвращает список вакансий
-#     """
-#     vacancies = Vacancy.objects.all()
-#
-#     request_status = request.GET.get("status")
-#     if request_status:
-#         vacancies = vacancies.filter(status=request_status)
-#
-#     serializer = VacancySerializer(vacancies, many=True)
-#
-#     return Response(serializer.data)
 
 @api_view(["GET"])
 def get_vacancies(request):
@@ -264,23 +250,23 @@ def update_vacancy(request, vacancy_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
+
+    if 'status' in request.data and request.data['status'] == 1:
+        # Set 'moderator' to None
+        request.data['moderator'] = None
+
     serializer = VacancySerializer(vacancy, data=request.data, many=False, partial=True)
 
     if serializer.is_valid():
+        serializer.validated_data['moderator'] = None
         serializer.save()
 
-        vacancy.status = 1
-        # if vacancy.status == 1:
-        #     vacancy.date_created = datetime.now()
-        vacancy.save()
+    vacancy.status = 1
+    # if vacancy.status == 1:
+    #     vacancy.date_created = datetime.now()
+    vacancy.save()
 
-        vacancy.date_of_formation = None
-        vacancy.date_complete = None
-        vacancy.save()
-
-        return Response(serializer.data)
-
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.data)
 
 
 @api_view(["PUT"])
@@ -298,18 +284,17 @@ def update_status_user(request, vacancy_id):
     else:
         vacancy.status = 2
         vacancy.save()
-
         if vacancy.status == 2:
             vacancy.date_of_formation = datetime.now()
             vacancy.save()
 
-            if vacancy.users is not None:
-                vacancy.users.login = "user1"
-                vacancy.users.save()
-            else:
+            if vacancy.users is None:
                 new_user = Users.objects.create(login="user1")
                 vacancy.users = new_user
                 vacancy.save()
+            else:
+                vacancy.users.login = "user1"
+                vacancy.users.save()
 
     serializer = VacancySerializer(vacancy, many=False)
     return Response(serializer.data)
@@ -332,7 +317,7 @@ def update_status_admin(request, vacancy_id):
 
     vacancy_status = vacancy.status
 
-    if vacancy.status != 2:
+    if vacancy_status != 2:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
     else:
         vacancy.status = 4
@@ -343,11 +328,11 @@ def update_status_admin(request, vacancy_id):
             vacancy.save()
 
             if vacancy.users is not None:
-                vacancy.users.login = "root"
-                vacancy.users.save()
-            else:
-                new_user = Users.objects.create(login="root")
-                vacancy.users = new_user
+                try:
+                    new_user = Users.objects.create(login="root")
+                except IntegrityError:
+                    new_user = Users.objects.get(login="root")
+                vacancy.moderator = new_user
                 vacancy.save()
 
     vacancy.status = request_status

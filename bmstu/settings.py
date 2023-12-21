@@ -14,7 +14,9 @@ SECRET_KEY = 'django-insecure-9r6r4@ye!n@vl%6l=n+d(t+5mx@sfys2($nm4#9sgz8vd*d=rs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+# LAB7
+# ALLOWED_HOSTS = ['192.168.127.199']
 
 
 # Application definition
@@ -158,3 +160,5 @@ AWS_STORAGE_BUCKET_NAME = 'images'
 AWS_ACCESS_KEY_ID = 'UMsFJp1F2txveC5QwLeT'
 AWS_SECRET_ACCESS_KEY = 'Pyy5HOUsdiSrZW22wmjHWHWoMCEWQWJk8ARm4394'
 AWS_S3_ENDPOINT_URL = 'http://127.0.0.1:9000'
+# LAB7
+# AWS_S3_ENDPOINT_URL = 'http://192.168.127.199:9000'
