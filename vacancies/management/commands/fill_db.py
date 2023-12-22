@@ -62,6 +62,8 @@ def add_cities():
 
 def add_vacancies():
     users = CustomUser.objects.filter(is_moderator=False)
+    moderators = CustomUser.objects.filter(is_superuser=True)
+
     if len(users) == 0:
         print("Заявки не могут быть добавлены. Сначала добавьте пользователей с помощью команды add_users")
         return
@@ -73,15 +75,33 @@ def add_vacancies():
         vacancy.name = "Вакансия №" + str(vacancy.pk)
         vacancy.status = random.randint(2, 5)
 
+        # if vacancy.status in [3, 4]:
+        #     vacancy.date_complete = random_date()
+        #     vacancy.date_of_formation = vacancy.date_complete - random_timedelta()
+        #     vacancy.date_created = vacancy.date_of_formation - random_timedelta()
+        #     vacancy.moderator = random.choice(moderators)
+        # else:
+        #     vacancy.date_of_formation = random_date()
+        #     vacancy.date_created = vacancy.date_of_formation - random_timedelta()
+
         if vacancy.status in [3, 4]:
-            vacancy.date_complete = random_date()
-            vacancy.date_of_formation = vacancy.date_complete - random_timedelta()
+            if vacancy.status == 3:
+                vacancy.date_complete = None
+            else:
+                vacancy.date_complete = random_date()
+
+            if vacancy.date_complete:
+                vacancy.date_of_formation = vacancy.date_complete - random_timedelta()
+            else:
+                vacancy.date_of_formation = random_date()
+
             vacancy.date_created = vacancy.date_of_formation - random_timedelta()
+            vacancy.moderator = random.choice(moderators)
         else:
             vacancy.date_of_formation = random_date()
             vacancy.date_created = vacancy.date_of_formation - random_timedelta()
 
-        vacancy.user = random.choice(users)
+        vacancy.employer = random.choice(users)
 
         for i in range(random.randint(1, 5)):
             vacancy.cities.add(random.choice(cities))
@@ -89,7 +109,6 @@ def add_vacancies():
         vacancy.save()
 
     print("Заявки добавлены")
-
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):

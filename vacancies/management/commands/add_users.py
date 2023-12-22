@@ -9,6 +9,12 @@ def add_users():
     CustomUser.objects.create_user("user3", "user3@user.com", "1234")
     CustomUser.objects.create_superuser("root", "root@root.com", "1234")
 
+    # CustomUser.objects.create_user("user", "user@user.com", "1234")
+    # CustomUser.objects.create_superuser("root", "root@root.com", "1234")
+    #
+    # for i in range(1, 2):
+    #     CustomUser.objects.create_user(f"user{i}", f"user{i}@user.com", "1234")
+
     print("Пользователи созданы")
 
 

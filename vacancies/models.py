@@ -83,8 +83,8 @@ class Vacancy(models.Model):
     date_of_formation = models.DateTimeField(verbose_name="Дата формирования", blank=True, null=True)
     date_complete = models.DateTimeField(verbose_name="Дата завершения", blank=True, null=True)
 
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Пользователь", null=True)
-    moderator = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Модератор", related_name='moderator', blank=True, null=True)
+    employer = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, verbose_name="Пользователь", related_name='employer', null=True)
+    moderator = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, verbose_name="Модератор", related_name='moderator', blank=True, null=True)
 
     cities = models.ManyToManyField(City, verbose_name="Города", null=True)
 

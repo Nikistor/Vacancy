@@ -18,9 +18,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 class VacancySerializer(serializers.ModelSerializer):
     cities = CitySerializer(read_only=True, many=True)
-    user = UserSerializer(read_only=True, many=False)
-
-    moderator = UserSerializer(read_only=True)
+    employer = UserSerializer(read_only=True, many=False)
+    moderator = UserSerializer(read_only=True, many=False)
 
     class Meta:
         # Модель, которую мы сериализуем

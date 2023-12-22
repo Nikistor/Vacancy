@@ -23,6 +23,10 @@ def search_city(request):
 
     def get_draft_vacancy_id():
         vacancy = Vacancy.objects.filter(status=1).first()
+        # token = get_access_token(request)
+        # payload = get_jwt_payload(token)
+        # user_id = payload["user_id"]
+        # vacancy = Vacancy.objects.filter(employer_id=user_id).filter(status=1).first()
 
         if vacancy is None:
             return None
@@ -132,35 +136,16 @@ def delete_city(request, city_id):
     return Response(serializer.data)
 
 
-# @api_view(["POST"])
-# @permission_classes([IsAuthenticated])
-# def add_city_to_vacancy(request, city_id):
-#     """
-#     Добавляет город в вакансию
-#     """
-#     if not City.objects.filter(pk=city_id).exists():
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-#
-#     city = City.objects.get(pk=city_id)
-#
-#     vacancy = Vacancy.objects.filter(status=1).last()
-#
-#     if vacancy is None:
-#         vacancy = Vacancy.objects.create()
-#
-#     vacancy.cities.add(city)
-#     vacancy.save()
-#
-#     serializer = VacancySerializer(vacancy.cities, many=True)
-#
-#     return Response(serializer.data)
-
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def add_city_to_vacancy(request, city_id):
     """
     Добавляет город в вакансию
     """
+    token = get_access_token(request)
+    payload = get_jwt_payload(token)
+    user_id = payload["user_id"]
+
     if not City.objects.filter(pk=city_id).exists():
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -171,11 +156,7 @@ def add_city_to_vacancy(request, city_id):
     if vacancy is None:
         vacancy = Vacancy.objects.create(date_created=datetime.now(timezone.utc), date_of_formation=None, date_complete=None)
 
-    # добавлено
-    token = get_access_token(request)
-    payload = get_jwt_payload(token)
-    user = CustomUser.objects.get(pk=payload["user_id"])
-    vacancy.user = user
+    vacancy.employer = CustomUser.objects.get(pk=user_id)
     vacancy.cities.add(city)
     vacancy.save()
 
@@ -227,13 +208,13 @@ def get_vacancies(request):
     date_form_after = request.GET.get("date_form_after")
     date_form_before = request.GET.get("date_form_before")
 
-    vacancies = Vacancy.objects.exclude(status__in=[1, 5]) if user.is_moderator else Vacancy.objects.filter(user_id=user.pk)
+    vacancies = Vacancy.objects.exclude(status__in=[1, 5]) if user.is_moderator else Vacancy.objects.filter(employer_id=user.pk)
 
     if status_id != -1:
         vacancies = vacancies.filter(status=status_id)
 
     if user_id != -1:
-        vacancies = vacancies.filter(user_id=user_id)
+        vacancies = vacancies.filter(employer_id=user_id)
 
     if date_form_after:
         vacancies = vacancies.filter(date_of_formation__gte=datetime.strptime(date_form_after, "%Y-%m-%d").date())
@@ -243,29 +224,6 @@ def get_vacancies(request):
 
     serializer = VacancySerializer(vacancies, many=True)
     return Response(serializer.data)
-
-    # status_id = int(request.GET.get("status", -1))
-    # user_id = int(request.GET.get("user", -1))
-    # date_start = int(request.GET.get("date_start", -1))
-    # date_end = int(request.GET.get("date_end", -1))
-    #
-    # vacancies = Vacancy.objects.exclude(status__in=[1, 5]) if user.is_moderator else Vacancy.objects.filter(
-    #     user_id=user.pk)
-    #
-    # if status_id != -1:
-    #     vacancies = vacancies.filter(status=status_id)
-    #
-    # if user_id != -1:
-    #     vacancies = vacancies.filter(user_id=user_id)
-    #
-    # if date_start != -1:
-    #     vacancies = vacancies.filter(date_of_formation__gt=datetime.fromtimestamp(date_start).date())
-    #
-    # if date_end != -1:
-    #     vacancies = vacancies.filter(date_of_formation__lt=datetime.fromtimestamp(date_end).date())
-    #
-    # serializer = VacancySerializer(vacancies, many=True)
-    # return Response(serializer.data)
 
 
 @api_view(["GET"])
@@ -293,15 +251,15 @@ def update_vacancy(request, vacancy_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
-    request.data['date_of_formation'] = None
-    request.data['date_complete'] = None
+    # request.data['date_of_formation'] = None
+    # request.data['date_complete'] = None
     serializer = VacancySerializer(vacancy, data=request.data, many=False, partial=True)
 
-    if 'status' in request.data and request.data['status'] == 1:
-        request.data['moderator'] = None
+    # if 'status' in request.data and request.data['status'] == 1:
+    #     request.data['moderator'] = None
 
     if serializer.is_valid():
-        serializer.validated_data['moderator'] = None
+        # serializer.validated_data['moderator'] = None
         serializer.save()
 
     vacancy.status = 1
@@ -309,30 +267,6 @@ def update_vacancy(request, vacancy_id):
 
     return Response(serializer.data)
 
-
-# @api_view(["PUT"])
-# @permission_classes([IsAuthenticated])
-# def update_status_user(request, vacancy_id):
-#     """
-#     Пользователь обновляет информацию о вакансии
-#     """
-#     if not Vacancy.objects.filter(pk=vacancy_id).exists():
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-#
-#     vacancy = Vacancy.objects.get(pk=vacancy_id)
-#
-#     if vacancy.status != 1:
-#         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-#     else:
-#         vacancy.status = 2
-#         vacancy.save()
-#         if vacancy.status == 2:
-#             vacancy.date_of_formation = datetime.now()
-#             vacancy.save()
-#
-#     serializer = VacancySerializer(vacancy, many=False)
-#
-#     return Response(serializer.data)
 
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
@@ -353,44 +287,11 @@ def update_status_user(request, vacancy_id):
         if vacancy.status == 2:
             vacancy.date_of_formation = datetime.now()
             vacancy.save()
-    # добавлено
-    token = get_access_token(request)
-    payload = get_jwt_payload(token)
-    user = CustomUser.objects.get(pk=payload["user_id"])
+
     serializer = VacancySerializer(vacancy, many=False)
-    vacancy.user = user
-    vacancy.save()
 
     return Response(serializer.data)
 
-
-# @api_view(["PUT"])
-# @permission_classes([IsModerator])
-# def update_status_admin(request, vacancy_id):
-#     """
-#     Модератор обновляет информацию о вакансии
-#     """
-#     if not Vacancy.objects.filter(pk=vacancy_id).exists():
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-#
-#     request_status = request.data["status"]
-#
-#     if request_status not in [3, 4]:
-#         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-#
-#     vacancy = Vacancy.objects.get(pk=vacancy_id)
-#
-#     if vacancy.status != 2:
-#         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-#
-#     vacancy.status = request_status
-#     if request_status in [4]:
-#         vacancy.date_complete = datetime.now()
-#         vacancy.save()
-#
-#     serializer = VacancySerializer(vacancy, many=False)
-#
-#     return Response(serializer.data)
 
 @api_view(["PUT"])
 @permission_classes([IsModerator])
@@ -398,6 +299,10 @@ def update_status_admin(request, vacancy_id):
     """
     Модератор обновляет информацию о вакансии
     """
+    token = get_access_token(request)
+    payload = get_jwt_payload(token)
+    user_id = payload["user_id"]
+
     if not Vacancy.objects.filter(pk=vacancy_id).exists():
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -408,17 +313,16 @@ def update_status_admin(request, vacancy_id):
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
 
-    vacancy_status = vacancy.status
-
-    if vacancy_status in [3, 4, 5]:
+    if vacancy.status != 2:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-    # добавлено
-    token = get_access_token(request)
-    payload = get_jwt_payload(token)
-    moderator = CustomUser.objects.get(pk=payload["user_id"])
+
+    if request_status == 3:
+        vacancy.date_complete = None
+    else:
+        vacancy.date_complete = datetime.now()
+
     vacancy.status = request_status
-    vacancy.date_complete = datetime.now()
-    vacancy.moderator = moderator
+    vacancy.moderator = CustomUser.objects.get(pk=user_id)
     vacancy.save()
 
     serializer = VacancySerializer(vacancy, many=False)
