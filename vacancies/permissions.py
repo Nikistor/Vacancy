@@ -49,3 +49,9 @@ class IsModerator(BasePermission):
             return False
 
         return user.is_moderator
+
+
+class IsRemoteService(BasePermission):
+    def has_permission(self, request, view):
+        access_key = request.data.get("access_key", "")
+        return access_key == 123

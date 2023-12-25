@@ -262,8 +262,23 @@ def update_vacancy(request, vacancy_id):
         # serializer.validated_data['moderator'] = None
         serializer.save()
 
-    vacancy.status = 1
-    vacancy.save()
+    # vacancy.status = 1
+    # vacancy.save()
+
+    return Response(serializer.data)
+
+
+@api_view(["POST"])
+@permission_classes([IsRemoteService])
+def update_vacancy_bankrupt(request, vacancy_id):
+    if not Vacancy.objects.filter(pk=vacancy_id).exists():
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    vacancy = Vacancy.objects.get(pk=vacancy_id)
+    serializer = VacancySerializer(vacancy, data=request.data, many=False, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
 
     return Response(serializer.data)
 

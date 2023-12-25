@@ -76,7 +76,15 @@ class Vacancy(models.Model):
         (5, 'Удалён'),
     )
 
-    salary = models.IntegerField(default=5000, verbose_name="Зарплата")
+    BANKRUPT_CHOICES = (
+        (-1, 'Не определён'),
+        (0, 'Да'),
+        (1, 'Нет')
+    )
+
+    bankrupt = models.IntegerField(choices=BANKRUPT_CHOICES, default=-1, verbose_name="Банкрот")
+
+    # salary = models.IntegerField(default=5000, verbose_name="Зарплата")
     name = models.CharField(max_length=255, verbose_name="Название")
     status = models.IntegerField(choices=STATUS_CHOICES, default=1, verbose_name="Статус")
     date_created = models.DateTimeField(default=datetime.now(tz=timezone.utc), verbose_name="Дата создания")
