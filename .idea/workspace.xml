@@ -25,21 +25,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab3/work&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab3/work",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\work\vacancies" />
@@ -181,6 +181,14 @@
       <workItem from="1703259724266" duration="250000" />
       <workItem from="1703260698194" duration="278000" />
       <workItem from="1703261004712" duration="40000" />
+      <workItem from="1703312570018" duration="528000" />
+      <workItem from="1703435158532" duration="131000" />
+      <workItem from="1703435306261" duration="119000" />
+      <workItem from="1703509917851" duration="79000" />
+      <workItem from="1703598582749" duration="1254000" />
+      <workItem from="1703599954775" duration="769000" />
+      <workItem from="1703600782250" duration="770000" />
+      <workItem from="1703601699962" duration="846000" />
     </task>
     <servers />
   </component>

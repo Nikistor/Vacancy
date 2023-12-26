@@ -12,7 +12,7 @@ class CitySerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Users
-        fields = ['login']
+        fields = ['email']
 
 
 class VacancySerializer(serializers.ModelSerializer):

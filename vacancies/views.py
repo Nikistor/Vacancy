@@ -159,9 +159,9 @@ def add_city_to_vacancy(request, city_id):
         if vacancy.status == 1:
             if vacancy.employer is None:
                 try:
-                    new_user = Users.objects.create(login="user1")
+                    new_user = Users.objects.create(email="user1@user.com")
                 except IntegrityError:
-                    new_user = Users.objects.get(login="user1")
+                    new_user = Users.objects.get(email="user1@user.com")
                 vacancy.employer = new_user
                 vacancy.save()
 
@@ -343,11 +343,11 @@ def update_status_user(request, vacancy_id):
             vacancy.save()
 
             if vacancy.employer is None:
-                new_user = Users.objects.create(login="user1")
+                new_user = Users.objects.create(email="user1@user.com")
                 vacancy.employer = new_user
                 vacancy.save()
             else:
-                vacancy.employer.login = "user1"
+                vacancy.employer.email = "user1@user.com"
                 vacancy.employer.save()
 
     serializer = VacancySerializer(vacancy, many=False)
@@ -439,9 +439,9 @@ def update_status_admin(request, vacancy_id):
 
             if vacancy.employer is not None:
                 try:
-                    new_user = Users.objects.create(login="root")
+                    new_user = Users.objects.create(email="root@root.com")
                 except IntegrityError:
-                    new_user = Users.objects.get(login="root")
+                    new_user = Users.objects.get(email="root@root.com")
                 vacancy.moderator = new_user
                 vacancy.save()
 

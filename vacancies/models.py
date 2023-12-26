@@ -5,12 +5,12 @@ from django.contrib.auth.models import User
 
 class Users(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="ID")
-    login = models.CharField(max_length=50, unique=True, verbose_name="Логин")
+    email = models.CharField(max_length=50, unique=True, verbose_name="Логин")
     password = models.CharField(max_length=50, verbose_name="Пароль")
     admin = models.BooleanField(default=False, verbose_name="Админ")
 
     def __str__(self):
-        return self.login
+        return self.email
 
     class Meta:
         verbose_name = "Пользователь"
