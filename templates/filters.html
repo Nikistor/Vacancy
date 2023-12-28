@@ -1,0 +1,40 @@
+{#Страница, в котором будет открываться после ввода в поле(select)#}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Информация о городе {% endblock %}
+
+{% block content %}
+    {% for data in database %}
+        <div class="grid-item">
+            <div class="card">
+                <div class="card-content">
+                    <div class="text-content">
+                    <p>Город: {{ data.name }}</p>
+                    <p>Дата основания: {{ data.foundation_date }} г.</p>
+{#                    <p><span class="price">ВРП: {{ data.GRP }} ₽</span></p>#}
+                    <p>Население: {{ data.GRP }} млн</p>
+                    <p>Климат: {{ data.climate }}</p>
+                    <p>Площадь: {{ data.square }} кв.км</p>
+                    <p>Статус: {{ data.status }}</p>
+                    <p>Описание: {{ data.description }}</p>
+                </div>
+                <script>
+                    Array.from(document.getElementsByClassName('price'), e => e.textContent = e.textContent.replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1 '));
+                </script>
+                <img src="{% static 'photo/city/'|add:data.name|add:'.jpg' %}" class="card-image" style="width: 40%">
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <h3>Нет такого значения!</h3>
+    {% endfor %}
+{% endblock %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
