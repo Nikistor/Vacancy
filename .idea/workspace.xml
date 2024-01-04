@@ -25,21 +25,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab3/work",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab3/work&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\work\vacancies" />
@@ -189,6 +189,22 @@
       <workItem from="1703599954775" duration="769000" />
       <workItem from="1703600782250" duration="770000" />
       <workItem from="1703601699962" duration="846000" />
+      <workItem from="1703604666339" duration="583000" />
+      <workItem from="1703618204208" duration="4987000" />
+      <workItem from="1703624973537" duration="568000" />
+      <workItem from="1703625562798" duration="129000" />
+      <workItem from="1703661239205" duration="291000" />
+      <workItem from="1703676464025" duration="621000" />
+      <workItem from="1703765656731" duration="2365000" />
+      <workItem from="1703771840794" duration="215000" />
+      <workItem from="1704361567468" duration="14000" />
+      <workItem from="1704366026659" duration="88000" />
+      <workItem from="1704370447498" duration="258000" />
+      <workItem from="1704371028454" duration="124000" />
+      <workItem from="1704371216284" duration="36000" />
+      <workItem from="1704373572087" duration="39000" />
+      <workItem from="1704380784685" duration="406000" />
+      <workItem from="1704383261432" duration="92000" />
     </task>
     <servers />
   </component>

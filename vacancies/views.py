@@ -13,11 +13,11 @@ def search_city(request):
     """
     Возвращает список городов
     """
-    def get_draft_vacancy_id():
-        vacancy = Vacancy.objects.filter(status=1).first()
-        if vacancy is None:
-            return None
-        return vacancy.pk
+    # def get_draft_vacancy_id():
+    #     vacancy = Vacancy.objects.filter(status=1).first()
+    #     if vacancy is None:
+    #         return None
+    #     return vacancy.pk
 
     # Получим параметры запроса из URL
     name = request.GET.get('name')
@@ -46,13 +46,13 @@ def search_city(request):
 
     serializer = CitySerializer(city, many=True)
     # для работы с лаб4
-    # return Response(serializer.data)
+    return Response(serializer.data)
 
-    resp = {
-        "draft_vacancy": get_draft_vacancy_id(),
-        "cities": serializer.data
-    }
-    return Response(resp)
+    # resp = {
+    #     "draft_vacancy": get_draft_vacancy_id(),
+    #     "cities": serializer.data
+    # }
+    # return Response(resp)
 
 
 @api_view(['GET'])
@@ -422,18 +422,18 @@ def update_status_admin(request, vacancy_id):
 
     vacancy_status = vacancy.status
 
-    if request_status == 3:
-        vacancy.status = 3
+    if request_status == 4:
+        vacancy.status = 4
         vacancy.date_complete = None
         vacancy.save()
 
     elif vacancy_status != 2:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
     else:
-        vacancy.status = 4
+        vacancy.status = 3
         vacancy.save()
 
-        if vacancy.status == 4:
+        if vacancy.status == 3:
             vacancy.date_complete = datetime.now()
             vacancy.save()
 
