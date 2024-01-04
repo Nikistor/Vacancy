@@ -1,12 +1,14 @@
 from django.conf import settings
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
+from django.utils.dateparse import parse_datetime
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from .jwt_helper import create_access_token
+from .management.utils import identity_user
 from .permissions import *
 from .serializers import *
 from .models import *
@@ -15,31 +17,28 @@ from dateutil import parser as date_parser
 access_token_lifetime = settings.JWT["ACCESS_TOKEN_LIFETIME"].total_seconds()
 
 
+def get_draft_vacancy_id(request):
+    user = identity_user(request)
+
+    if user is None:
+        return None
+
+    vacancy = Vacancy.objects.filter(employer_id=user.pk).filter(status=1).first()
+
+    if vacancy is None:
+        return None
+
+    return vacancy
+
+
 @api_view(["GET"])
 def search_city(request):
     """
     Возвращает список городов
     """
 
-    def get_draft_vacancy_id():
-        vacancy = Vacancy.objects.filter(status=1).first()
-        # token = get_access_token(request)
-        # payload = get_jwt_payload(token)
-        # user_id = payload["user_id"]
-        # vacancy = Vacancy.objects.filter(employer_id=user_id).filter(status=1).first()
-
-        if vacancy is None:
-            return None
-
-        return vacancy.pk
-
     # Получим параметры запроса из URL
-    name = request.GET.get('name')
-    foundation_date = request.GET.get('foundation_date')
-    grp = request.GET.get('grp')
-    climate = request.GET.get('climate')
-    square = request.GET.get('square')
-    description = request.GET.get('description')
+    name = request.GET.get('query')
 
     # Получение данные после запроса с БД (через ORM)
     city = City.objects.filter(status=1)
@@ -47,21 +46,13 @@ def search_city(request):
     # Применим фильтры на основе параметров запроса, если они предоставлены
     if name:
         city = city.filter(name__icontains=name)
-    if foundation_date:
-        city = city.filter(foundation_date=foundation_date)
-    if grp:
-        city = city.filter(grp=grp)
-    if climate:
-        city = city.filter(climate__icontains=climate)
-    if square:
-        city = city.filter(square=square)
-    if description:
-        city = city.filter(description__icontains=description)
 
     serializer = CitySerializer(city, many=True)
 
+    draft_vacancy = get_draft_vacancy_id(request)
+
     resp = {
-        "draft_vacancy": get_draft_vacancy_id(),
+        "draft_vacancy_id": draft_vacancy.pk if draft_vacancy else None,
         "cities": serializer.data
     }
 
@@ -154,13 +145,14 @@ def add_city_to_vacancy(request, city_id):
     vacancy = Vacancy.objects.filter(status=1).last()
 
     if vacancy is None:
-        vacancy = Vacancy.objects.create(date_created=datetime.now(timezone.utc), date_of_formation=None, date_complete=None)
+        vacancy = Vacancy.objects.create(date_created=datetime.now(timezone.utc), date_formation=None, date_complete=None)
 
+    vacancy.name = "Вакансия №" + str(vacancy.pk)
     vacancy.employer = CustomUser.objects.get(pk=user_id)
     vacancy.cities.add(city)
     vacancy.save()
 
-    serializer = VacancySerializer(vacancy.cities, many=True)
+    serializer = VacancySerializer(vacancy)
 
     return Response(serializer.data)
 
@@ -203,24 +195,25 @@ def get_vacancies(request):
     payload = get_jwt_payload(token)
     user = CustomUser.objects.get(pk=payload["user_id"])
 
-    status_id = int(request.GET.get("status", -1))
-    user_id = int(request.GET.get("user", -1))
-    date_form_after = request.GET.get("date_form_after")
-    date_form_before = request.GET.get("date_form_before")
+    status= int(request.GET.get("status", -1))
+    date_start = request.GET.get("date_start")
+    date_end = request.GET.get("date_end")
 
-    vacancies = Vacancy.objects.exclude(status__in=[1, 5]) if user.is_moderator else Vacancy.objects.filter(employer_id=user.pk)
+    vacancies = Vacancy.objects.exclude(status__in=[1, 5])
 
-    if status_id != -1:
-        vacancies = vacancies.filter(status=status_id)
+    if not user.is_moderator:
+        vacancies = vacancies.filter(employer_id=user.pk)
 
-    if user_id != -1:
-        vacancies = vacancies.filter(employer_id=user_id)
+    if status > 0:
+        vacancies = vacancies.filter(status=status)
 
-    if date_form_after:
-        vacancies = vacancies.filter(date_of_formation__gte=datetime.strptime(date_form_after, "%Y-%m-%d").date())
+    if date_start:
+        # vacancies = vacancies.filter(date_formation__gte=datetime.strptime(date_start, "%Y-%m-%d").date())
+        vacancies = vacancies.filter(date_formation__gte=parse_datetime(date_start))
 
-    if date_form_before:
-        vacancies = vacancies.filter(date_of_formation__lte=datetime.strptime(date_form_before, "%Y-%m-%d").date())
+    if date_end:
+        # vacancies = vacancies.filter(date_formation__lte=datetime.strptime(date_end, "%Y-%m-%d").date())
+        vacancies = vacancies.filter(date_formation__lte=parse_datetime(date_end))
 
     serializer = VacancySerializer(vacancies, many=True)
     return Response(serializer.data)
@@ -251,7 +244,7 @@ def update_vacancy(request, vacancy_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
-    # request.data['date_of_formation'] = None
+    # request.data['date_formation'] = None
     # request.data['date_complete'] = None
     serializer = VacancySerializer(vacancy, data=request.data, many=False, partial=True)
 
@@ -300,8 +293,8 @@ def update_status_user(request, vacancy_id):
         vacancy.status = 2
         vacancy.save()
         if vacancy.status == 2:
-            vacancy.date_of_formation = datetime.now()
-            vacancy.save()
+            vacancy.date_formation = datetime.now()
+        vacancy.save()
 
     serializer = VacancySerializer(vacancy, many=False)
 
@@ -331,7 +324,7 @@ def update_status_admin(request, vacancy_id):
     if vacancy.status != 2:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-    if request_status == 3:
+    if request_status == 4:
         vacancy.date_complete = None
     else:
         vacancy.date_complete = datetime.now()
@@ -439,21 +432,11 @@ def register(request):
 
 
 @api_view(["POST"])
+@permission_classes([IsAuthenticated])
 def check(request):
-    token = get_access_token(request)
+    user = identity_user(request)
 
-    if token is None:
-        message = {"message": "Token is not found"}
-        return Response(message, status=status.HTTP_401_UNAUTHORIZED)
-
-    if token in cache:
-        message = {"message": "Token in blacklist"}
-        return Response(message, status=status.HTTP_401_UNAUTHORIZED)
-
-    payload = get_jwt_payload(token)
-    user_id = payload["user_id"]
-
-    user = CustomUser.objects.get(pk=user_id)
+    user = CustomUser.objects.get(pk=user.pk)
     serializer = UserSerializer(user, many=False)
 
     return Response(serializer.data, status=status.HTTP_200_OK)

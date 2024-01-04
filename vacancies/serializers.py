@@ -28,6 +28,17 @@ class VacancySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class VacanciesSerializer(serializers.ModelSerializer):
+    employer = UserSerializer(read_only=True, many=False)
+    moderator = UserSerializer(read_only=True, many=False)
+
+    class Meta:
+        # Модель, которую мы сериализуем
+        model = Vacancy
+        # Поля, которые мы сериализуем (Все поля)
+        fields = '__all__'
+
+
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser

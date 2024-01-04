@@ -20,7 +20,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab5/work",
+    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab3/work",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)"
   },
@@ -32,6 +32,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab5\work\vacancies\management" />
       <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab5\work\vacancies" />
     </key>
   </component>
@@ -104,8 +105,6 @@
       <workItem from="1703510819775" duration="3603000" />
       <workItem from="1703519714858" duration="1003000" />
       <workItem from="1703520991134" duration="3000" />
-<<<<<<< Updated upstream
-=======
       <workItem from="1703598652189" duration="231000" />
       <workItem from="1703599012895" duration="634000" />
       <workItem from="1703601032430" duration="1497000" />
@@ -114,7 +113,15 @@
       <workItem from="1703616622996" duration="517000" />
       <workItem from="1703661533454" duration="851000" />
       <workItem from="1703676472227" duration="1642000" />
->>>>>>> Stashed changes
+      <workItem from="1703705707565" duration="546000" />
+      <workItem from="1703778573142" duration="391000" />
+      <workItem from="1704361580152" duration="5796000" />
+      <workItem from="1704367827972" duration="1420000" />
+      <workItem from="1704374338743" duration="41000" />
+      <workItem from="1704374898545" duration="307000" />
+      <workItem from="1704375225163" duration="220000" />
+      <workItem from="1704378239833" duration="3659000" />
+      <workItem from="1704382004116" duration="3030000" />
     </task>
     <servers />
   </component>

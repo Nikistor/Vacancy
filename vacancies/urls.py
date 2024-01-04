@@ -14,7 +14,7 @@ urlpatterns = [
     path('api/cities/<int:city_id>/update_image/', update_city_image),  # PUT
 
     # Набор методов для заявок
-    path('api/vacancies/', get_vacancies),  # GET
+    path('api/vacancies/search/', get_vacancies),  # GET
     path('api/vacancies/<int:vacancy_id>/', get_vacancy_by_id),  # GET
     path('api/vacancies/<int:vacancy_id>/update/', update_vacancy),  # PUT
     path('api/vacancies/<int:vacancy_id>/update_bankrupt/', update_vacancy_bankrupt),  # POST

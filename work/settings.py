@@ -16,9 +16,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-APP_NAME = 'vacancies'
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -28,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    APP_NAME,
+    'vacancies',
     'rest_framework',
     'corsheaders',
     'drf_yasg',
@@ -72,7 +69,7 @@ WSGI_APPLICATION = 'work.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "work",
+        "NAME": "vacancies",
         'USER': 'postgres',
         'PASSWORD': 'postgres'
     }
@@ -135,7 +132,7 @@ CORS_ALLOW_HEADERS = [
 REDIS_HOST = 'localhost'
 REDIS_PORT = '6379'
 
-AUTH_USER_MODEL = APP_NAME + '.CustomUser'
+AUTH_USER_MODEL = 'vacancies.CustomUser'
 
 JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
@@ -156,6 +153,6 @@ CACHES = {
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_STORAGE_BUCKET_NAME = 'images'
-AWS_ACCESS_KEY_ID = '9ZT4j6v9tm4GtVHpOCoO'
-AWS_SECRET_ACCESS_KEY = 'tZSODvC0UUozqWk1Nz6VqwvvBze37LXr1Bc8qn38'
+AWS_ACCESS_KEY_ID = 'dlBdiS6kYDZDHEWtTkwQ'
+AWS_SECRET_ACCESS_KEY = 'k32A7wAa3xcIoFdmZmG3BIZpZGelSR8ErxgzngLN'
 AWS_S3_ENDPOINT_URL = 'http://127.0.0.1:9000'

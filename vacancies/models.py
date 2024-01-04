@@ -19,7 +19,7 @@ class City(models.Model):
     grp = models.FloatField(default=13.1, verbose_name="Население (млн)")
     climate = models.CharField(max_length=255, default="умеренный", verbose_name="Климат")
     square = models.IntegerField(default=2561, verbose_name="Площадь")
-    image = models.ImageField(default="cities/Москва.jpg", verbose_name="Фото")
+    image = models.ImageField(upload_to="cities", default="cities/Москва.jpg", verbose_name="Фото")
 
     def __str__(self):
         return self.name
@@ -84,11 +84,11 @@ class Vacancy(models.Model):
 
     bankrupt = models.IntegerField(choices=BANKRUPT_CHOICES, default=-1, verbose_name="Банкрот")
 
-    # salary = models.IntegerField(default=5000, verbose_name="Зарплата")
     name = models.CharField(max_length=255, verbose_name="Название")
+
     status = models.IntegerField(choices=STATUS_CHOICES, default=1, verbose_name="Статус")
     date_created = models.DateTimeField(default=datetime.now(tz=timezone.utc), verbose_name="Дата создания")
-    date_of_formation = models.DateTimeField(verbose_name="Дата формирования", blank=True, null=True)
+    date_formation = models.DateTimeField(verbose_name="Дата формирования", blank=True, null=True)
     date_complete = models.DateTimeField(verbose_name="Дата завершения", blank=True, null=True)
 
     employer = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, verbose_name="Пользователь", related_name='employer', null=True)
@@ -102,4 +102,4 @@ class Vacancy(models.Model):
     class Meta:
         verbose_name = "Вакансия"
         verbose_name_plural = "Вакансии"
-        ordering = ('-date_of_formation', )
+        ordering = ('-date_formation', )
