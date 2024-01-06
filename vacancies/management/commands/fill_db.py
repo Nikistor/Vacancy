@@ -56,7 +56,7 @@ def add_cities():
         description="Волгоград - город, один из крупнейших на Юге страны. Его называют портом пяти морей, Волго-Донской канал соединяет теплые южные моря – Черное, Азовское, Каспийское – с холодными Балтийским и Северным. Благодаря этому в городе интенсивно развивается торговля и кипит деловая жизнь. В городе-герое Волгограде находится множество памятников, посвященных героям Великой Отечественной войны.",
         status=1,
         foundation_date=1589,
-        grp=1.1,
+        grp=1.3,
         climate="умеренный",
         square=859,
         image="cities/5.jpg"
@@ -75,19 +75,10 @@ def add_vacancies():
 
     cities = City.objects.all()
 
-    for _ in range(10):
+    for _ in range(30):
         vacancy = Vacancy.objects.create()
         vacancy.name = "Вакансия №" + str(vacancy.pk)
         vacancy.status = random.randint(2, 5)
-
-        # if vacancy.status in [3, 4]:
-        #     vacancy.date_complete = random_date()
-        #     vacancy.date_formation = vacancy.date_complete - random_timedelta()
-        #     vacancy.date_created = vacancy.date_formation - random_timedelta()
-        #     vacancy.moderator = random.choice(moderators)
-        # else:
-        #     vacancy.date_formation = random_date()
-        #     vacancy.date_created = vacancy.date_formation - random_timedelta()
 
         if vacancy.status in [3, 4]:
             if vacancy.status == 4:
@@ -102,6 +93,7 @@ def add_vacancies():
 
             vacancy.date_created = vacancy.date_formation - random_timedelta()
             vacancy.moderator = random.choice(moderators)
+            vacancy.bankrupt = random.randint(0, 1)
         else:
             vacancy.date_formation = random_date()
             vacancy.date_created = vacancy.date_formation - random_timedelta()

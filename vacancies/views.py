@@ -1,3 +1,4 @@
+import requests
 from django.conf import settings
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
@@ -8,11 +9,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from .jwt_helper import create_access_token
-from .management.utils import identity_user
+from .utils import identity_user
 from .permissions import *
 from .serializers import *
 from .models import *
-from dateutil import parser as date_parser
 
 access_token_lifetime = settings.JWT["ACCESS_TOKEN_LIFETIME"].total_seconds()
 
@@ -89,7 +89,7 @@ def update_city(request, city_id):
 
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -100,10 +100,9 @@ def create_city(request):
     """
     Добавляет новый город
     """
-    City.objects.create()
+    city = City.objects.create()
 
-    cities = City.objects.all()
-    serializer = CitySerializer(cities, many=True)
+    serializer = CitySerializer(city)
 
     return Response(serializer.data)
 
@@ -145,7 +144,7 @@ def add_city_to_vacancy(request, city_id):
     vacancy = Vacancy.objects.filter(status=1).last()
 
     if vacancy is None:
-        vacancy = Vacancy.objects.create(date_created=datetime.now(timezone.utc), date_formation=None, date_complete=None)
+        vacancy = Vacancy.objects.create(date_created=timezone.now(), date_formation=None, date_complete=None)
 
     vacancy.name = "Вакансия №" + str(vacancy.pk)
     vacancy.employer = CustomUser.objects.get(pk=user_id)
@@ -154,7 +153,7 @@ def add_city_to_vacancy(request, city_id):
 
     serializer = VacancySerializer(vacancy)
 
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(["GET"])
@@ -165,9 +164,9 @@ def get_city_image(request, city_id):
     if not City.objects.filter(pk=city_id).exists():
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    service = City.objects.get(pk=city_id)
+    city = City.objects.get(pk=city_id)
 
-    return HttpResponse(service.image, content_type="image/png")
+    return HttpResponse(city.image, content_type="image/png")
 
 
 @api_view(["PUT"])
@@ -229,7 +228,7 @@ def get_vacancy_by_id(request, vacancy_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
-    serializer = VacancySerializer(vacancy, many=False)
+    serializer = VacancySerializer(vacancy)
 
     return Response(serializer.data)
 
@@ -276,6 +275,14 @@ def update_vacancy_bankrupt(request, vacancy_id):
     return Response(serializer.data)
 
 
+def calculate_vacancy_bankrupt(vacancy_id):
+    data = {
+        "vacancy_id": vacancy_id
+    }
+
+    requests.post("http://127.0.0.1:8080/calc_bankrupt/", json=data, timeout=3)
+
+
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
 def update_status_user(request, vacancy_id):
@@ -294,9 +301,11 @@ def update_status_user(request, vacancy_id):
         vacancy.save()
         if vacancy.status == 2:
             vacancy.date_formation = datetime.now()
-        vacancy.save()
+            vacancy.save()
 
-    serializer = VacancySerializer(vacancy, many=False)
+    calculate_vacancy_bankrupt(vacancy_id)
+
+    serializer = VacancySerializer(vacancy)
 
     return Response(serializer.data)
 
@@ -314,8 +323,7 @@ def update_status_admin(request, vacancy_id):
     if not Vacancy.objects.filter(pk=vacancy_id).exists():
         return Response(status=status.HTTP_404_NOT_FOUND)
 
-    request_status = request.data["status"]
-
+    request_status = int(request.data["status"])
     if request_status not in [3, 4]:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
@@ -323,6 +331,11 @@ def update_status_admin(request, vacancy_id):
 
     if vacancy.status != 2:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    # vacancy.status = request_status
+    # vacancy.date_complete = datetime.now()
+    # vacancy.moderator = CustomUser.objects.get(pk=user_id)
+    # vacancy.save()
 
     if request_status == 4:
         vacancy.date_complete = None

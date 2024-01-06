@@ -12,14 +12,15 @@ class City(models.Model):
         (2, 'Удалена'),
     )
 
-    name = models.CharField(max_length=100, default="Название города", verbose_name="Название")
-    description = models.TextField(default="Описание города", null=True, blank=True, verbose_name="Описание")
+    name = models.CharField(max_length=100, verbose_name="Название")
+    description = models.TextField(verbose_name="Описание", null=True, blank=True)
+    foundation_date = models.IntegerField(verbose_name="Дата основания", null=True, blank=True)
+    grp = models.FloatField(verbose_name="Население (млн)", null=True, blank=True)
+    climate = models.CharField(max_length=255, verbose_name="Климат", null=True, blank=True)
+    square = models.IntegerField(verbose_name="Площадь", null=True, blank=True)
+
     status = models.IntegerField(choices=STATUS_CHOICES, default=1, verbose_name="Статус")
-    foundation_date = models.IntegerField(default=1147, verbose_name="Дата основания")
-    grp = models.FloatField(default=13.1, verbose_name="Население (млн)")
-    climate = models.CharField(max_length=255, default="умеренный", verbose_name="Климат")
-    square = models.IntegerField(default=2561, verbose_name="Площадь")
-    image = models.ImageField(upload_to="cities", default="cities/Москва.jpg", verbose_name="Фото")
+    image = models.ImageField(upload_to="cities", default="cities/default.jpg", verbose_name="Фото", null=True, blank=True)
 
     def __str__(self):
         return self.name

@@ -20,7 +20,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab3/work",
+    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab5/work",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)"
   },
@@ -32,8 +32,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab5\work\vacancies\management" />
       <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab5\work\vacancies" />
+      <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab5\work\vacancies\management" />
     </key>
   </component>
   <component name="RunManager">
@@ -122,6 +122,16 @@
       <workItem from="1704375225163" duration="220000" />
       <workItem from="1704378239833" duration="3659000" />
       <workItem from="1704382004116" duration="3030000" />
+      <workItem from="1704389603889" duration="721000" />
+      <workItem from="1704391090775" duration="104000" />
+      <workItem from="1704539465281" duration="266000" />
+      <workItem from="1704539846058" duration="45000" />
+      <workItem from="1704542148266" duration="1716000" />
+      <workItem from="1704543947265" duration="3478000" />
+      <workItem from="1704548465742" duration="4603000" />
+      <workItem from="1704553772318" duration="1367000" />
+      <workItem from="1704558005479" duration="4595000" />
+      <workItem from="1704567897285" duration="2272000" />
     </task>
     <servers />
   </component>
