@@ -17,10 +17,14 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../../" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2XvwLjgScHUGhpM00PBSIsmrdsS" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -30,7 +34,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab4/work",
+    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab5/work",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)"
   },
@@ -207,6 +211,13 @@
       <workItem from="1704383261432" duration="92000" />
       <workItem from="1704539483617" duration="243000" />
       <workItem from="1704540644770" duration="128000" />
+      <workItem from="1705169133294" duration="387000" />
+      <workItem from="1705228144408" duration="605000" />
+      <workItem from="1705244419321" duration="608000" />
+      <workItem from="1705255930078" duration="753000" />
+      <workItem from="1705257535501" duration="5000" />
+      <workItem from="1705298321168" duration="97000" />
+      <workItem from="1705412994096" duration="151000" />
     </task>
     <servers />
   </component>
