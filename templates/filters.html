@@ -12,16 +12,12 @@
                     <div class="text-content">
                     <p>Город: {{ data.name }}</p>
                     <p>Дата основания: {{ data.foundation_date }} г.</p>
-{#                    <p><span class="price">ВРП: {{ data.GRP }} ₽</span></p>#}
                     <p>Население: {{ data.GRP }} млн</p>
                     <p>Климат: {{ data.climate }}</p>
                     <p>Площадь: {{ data.square }} кв.км</p>
                     <p>Статус: {{ data.status }}</p>
                     <p>Описание: {{ data.description }}</p>
                 </div>
-                <script>
-                    Array.from(document.getElementsByClassName('price'), e => e.textContent = e.textContent.replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1 '));
-                </script>
                 <img src="{% static 'photo/city/'|add:data.name|add:'.jpg' %}" class="card-image" style="width: 40%">
                 </div>
             </div>

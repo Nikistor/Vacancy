@@ -21,7 +21,6 @@ from vacancies import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('hello/', views.hello),
     path('', views.GetCities),
     path('city/<int:id>/', views.GetCity, name='city_url'),
     path('sendText', views.sendText, name='sendText'),

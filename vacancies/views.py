@@ -5,12 +5,6 @@ from datetime import date
 
 """Шаблонизация"""
 def hello(request):
-    # Возврат функции без вложенных полей
-    # return render(request, 'index.html', {
-    #     'current_date': date.today()
-    # })
-    # С вложенным полями
-    # return render(request, 'index.html', {'data': {'current_date': date.today()}})
     return render(request, 'index.html', {'data': {
         'current_date': date.today(),
         'list': ['python', 'django', 'html']
@@ -66,40 +60,14 @@ def sendText(request):
 
 def filter(request):
     filter_keyword = request.GET.get('filter_keyword')
-    filter_field = request.GET.get('filter_field')
+
 
     if not filter_keyword:
-    # if not filter_keyword or not filter_field:
         return HttpResponseBadRequest("Необходимо указать ключевое слово и поле для фильтрации")
-
-    # if not filter_keyword or not filter_field:
-        # messages.error(request, 'Необходимо указать ключевое слово и поле для фильтрации')
-        # return redirect('filter')  # Ссылка на URL, на который мы хотим перенаправить пользователя
 
     # Преобразовать ключевое слово в строку для поиска в базе данных
     filter_keyword = str(filter_keyword)
 
-    # Получить список услуг из базы данных
-    filtered_services = []
-
-    # if filter_field == 'name':
     filtered_services = [service for service in database if filter_keyword.lower() in service['name'].lower()]
-    # elif filter_field == 'name_organize':
-    #     filtered_services = [service for service in database if filter_keyword.lower() in service['name_organize']]
-    # elif filter_field == 'description':
-    #     filtered_services = [service for service in database if filter_keyword.lower() in service['description']]
-    # elif filter_field == 'income_level':
-    #     filtered_services = [service for service in database if service['income_level'] == int(filter_keyword)]
-    # elif filter_field == 'ID_work_experience':
-    #     filtered_services = [service for service in database if service['ID_work_experience'] == int(filter_keyword)]
-    # elif filter_field == 'ID_skills':
-    #     filtered_services = [service for service in database if service['ID_skills'] == int(filter_keyword)]
-    # elif filter_field == 'ID_work_schedule':
-    #     filtered_services = [service for service in database if service['ID_work_schedule'] == int(filter_keyword)]
-    # elif filter_field == 'ID_specialization':
-    #     filtered_services = [service for service in database if service['ID_specialization'] == int(filter_keyword)]
-
-    # else:
-    #     pass
 
     return render(request, 'filters.html', {'database': filtered_services})
