@@ -251,14 +251,6 @@ def update_vacancy(request, vacancy_id):
     return Response(serializer.data)
 
 
-def calculate_vacancy_bankrupt(vacancy_id):
-    data = {
-        "vacancy_id": vacancy_id
-    }
-
-    requests.post("http://127.0.0.1:8080/calc_bankrupt/", json=data, timeout=3)
-
-
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
 def update_status_user(request, vacancy_id):
@@ -305,11 +297,6 @@ def update_status_admin(request, vacancy_id):
 
     if vacancy.status != 2:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-    # vacancy.status = request_status
-    # vacancy.date_complete = datetime.now()
-    # vacancy.moderator = CustomUser.objects.get(pk=user_id)
-    # vacancy.save()
 
     if request_status == 4:
         vacancy.date_complete = None
