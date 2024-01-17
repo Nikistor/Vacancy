@@ -17,7 +17,6 @@ urlpatterns = [
     path('api/vacancies/search/', get_vacancies),  # GET
     path('api/vacancies/<int:vacancy_id>/', get_vacancy_by_id),  # GET
     path('api/vacancies/<int:vacancy_id>/update/', update_vacancy),  # PUT
-    path('api/vacancies/<int:vacancy_id>/update_bankrupt/', update_vacancy_bankrupt),  # POST
     path('api/vacancies/<int:vacancy_id>/update_status_user/', update_status_user),  # PUT
     path('api/vacancies/<int:vacancy_id>/update_status_admin/', update_status_admin),  # PUT
     path('api/vacancies/<int:vacancy_id>/delete/', delete_vacancy),  # DELETE
@@ -26,6 +25,5 @@ urlpatterns = [
     # Набор методов для аутентификации и авторизации
     path("api/register/", register),
     path("api/login/", login),
-    path("api/check/", check),
     path("api/logout/", logout)
 ]

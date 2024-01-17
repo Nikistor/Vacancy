@@ -243,30 +243,6 @@ def update_vacancy(request, vacancy_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     vacancy = Vacancy.objects.get(pk=vacancy_id)
-    # request.data['date_formation'] = None
-    # request.data['date_complete'] = None
-    serializer = VacancySerializer(vacancy, data=request.data, many=False, partial=True)
-
-    # if 'status' in request.data and request.data['status'] == 1:
-    #     request.data['moderator'] = None
-
-    if serializer.is_valid():
-        # serializer.validated_data['moderator'] = None
-        serializer.save()
-
-    # vacancy.status = 1
-    # vacancy.save()
-
-    return Response(serializer.data)
-
-
-@api_view(["POST"])
-@permission_classes([IsRemoteService])
-def update_vacancy_bankrupt(request, vacancy_id):
-    if not Vacancy.objects.filter(pk=vacancy_id).exists():
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    vacancy = Vacancy.objects.get(pk=vacancy_id)
     serializer = VacancySerializer(vacancy, data=request.data, many=False, partial=True)
 
     if serializer.is_valid():
@@ -302,8 +278,6 @@ def update_status_user(request, vacancy_id):
         if vacancy.status == 2:
             vacancy.date_formation = datetime.now()
             vacancy.save()
-
-    calculate_vacancy_bankrupt(vacancy_id)
 
     serializer = VacancySerializer(vacancy)
 
@@ -385,9 +359,7 @@ def delete_city_from_vacancy(request, vacancy_id, city_id):
     vacancy.cities.remove(City.objects.get(pk=city_id))
     vacancy.save()
 
-    serializer = CitySerializer(vacancy.cities, many=True)
-
-    return Response(serializer.data)
+    return Response(status=status.HTTP_200_OK)
 
 
 @swagger_auto_schema(method='post', request_body=UserLoginSerializer)
@@ -442,17 +414,6 @@ def register(request):
     response.set_cookie('access_token', access_token, httponly=False, expires=access_token_lifetime)
 
     return response
-
-
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def check(request):
-    user = identity_user(request)
-
-    user = CustomUser.objects.get(pk=user.pk)
-    serializer = UserSerializer(user, many=False)
-
-    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])

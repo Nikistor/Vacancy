@@ -7,29 +7,33 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../../" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Z39JASyoFRzp42yBQjGFHseUEV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab5/work",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Работа/МГТУ им. Н.Э.Баумана/Разработка интернет приложений/lab3/work&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Работа\МГТУ им. Н.Э.Баумана\Разработка интернет приложений\lab5\work\vacancies" />
@@ -132,6 +136,29 @@
       <workItem from="1704553772318" duration="1367000" />
       <workItem from="1704558005479" duration="4595000" />
       <workItem from="1704567897285" duration="2272000" />
+      <workItem from="1704628586329" duration="1072000" />
+      <workItem from="1704633228483" duration="667000" />
+      <workItem from="1704906668181" duration="569000" />
+      <workItem from="1704907316197" duration="1283000" />
+      <workItem from="1704957672668" duration="1682000" />
+      <workItem from="1705039143635" duration="601000" />
+      <workItem from="1705046689133" duration="5000" />
+      <workItem from="1705046759182" duration="213000" />
+      <workItem from="1705048849851" duration="666000" />
+      <workItem from="1705066508954" duration="2815000" />
+      <workItem from="1705146633058" duration="448000" />
+      <workItem from="1705150531476" duration="854000" />
+      <workItem from="1705225508978" duration="2297000" />
+      <workItem from="1705414055854" duration="65000" />
+      <workItem from="1705414127986" duration="85000" />
+      <workItem from="1705414234151" duration="291000" />
+      <workItem from="1705414599283" duration="1523000" />
+      <workItem from="1705421337345" duration="1231000" />
+      <workItem from="1705424780111" duration="1115000" />
+      <workItem from="1705430006730" duration="19000" />
+      <workItem from="1705430197835" duration="61000" />
+      <workItem from="1705431007212" duration="12000" />
+      <workItem from="1705479354470" duration="70000" />
     </task>
     <servers />
   </component>
