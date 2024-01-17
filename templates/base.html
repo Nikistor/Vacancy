@@ -1,0 +1,27 @@
+{# Наследование шаблонов #}
+{# Наследование шаблонов позволяет создать основной шаблон, который содержит общие элементы, а частные места будут переопределять наследники. #}
+{# Места, которые могут быть переопределены помечаются тегами {% block %} #}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+    <head>
+      <meta charset="utf-8">
+        <title>{% block title %}{% endblock %}</title>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/examp.css' %}">
+    </head>
+    <body>
+        <div class="background-image">
+            <img src="{% static 'photo/vakansia.jpg' %}" alt="Фоновое изображение">
+        </div>
+        <h1> Выберите города в котором, нужно разместить вакансию </h1>
+
+        <form method="GET" action="{% url 'cities' %}">
+
+            <input type="text" name="filter_field" placeholder="Введите город">
+            <button type="submit" >Найти</button>
+        </form><br>
+        {# Наследование шаблонизации#}
+        {% block content %}{% endblock %}
+    </body>
+</html>

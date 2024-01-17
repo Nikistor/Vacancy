@@ -1,0 +1,24 @@
+{#Страница в котором будет предоставляться только одна карточка при выборе нескольких карточек#}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Информация о городе {% endblock %}
+
+{% block content %}
+    <div class="grid-item">
+        <div class="card">
+            <div class="card-content">
+                <div class="text-content">
+                    <p>Город: {{ data.city.name }}</p>
+                    <p>Дата основания: {{ data.city.foundation_date }} г.</p>
+                    <p>Население: {{ data.city.grp }} млн</p>
+                    <p>Климат: {{ data.city.climate }}</p>
+                    <p>Площадь: {{ data.city.square }} кв.км</p>
+                    <p>Статус: {{ data.city.status }}</p>
+                    <p>Описание: {{ data.city.description }}</p>
+                </div>
+                <img src="{% static 'photo/city/'|add:data.city.name|add:'.jpg' %}" class="card-image" style="width: 40%">
+            </div>
+        </div>
+    </div>
+{% endblock %}

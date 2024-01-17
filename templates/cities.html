@@ -1,0 +1,25 @@
+{#Страница в котором содержится несколько карточек#}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Города {% endblock %}
+
+{% block content %}
+    <div class="grid-container">
+        {% for city in data.cities %}
+            <div class="grid-item">
+                <a href="{% url "url_city" city.id %}">
+                    <img src="{% static 'photo/city/'|add:city.name|add:'.jpg' %}" style="width: 100%; height: 50%;">
+                    <p style="font-size: 20px">{{ city.name }}</p>
+                </a>
+                <form method="POST" action="{% url 'delete_city' %}">
+                    {% csrf_token %}
+                    <input type="text" name="city_id" value="{{ city.id }}" style="display: none;">
+                    <button type="submit">Удалить город</button>
+                </form>
+            </div>
+        {% empty %}
+            <p>Список пуст</p>
+        {% endfor %}
+    </div>
+{% endblock %}
